@@ -2,12 +2,11 @@ const { loading, approved } = require("../data/emojis.json");
 const { logs } = require("../data/channels.json");
 const { mods, prefix } = require("../settings.json");
 const replies = require("../data/replies.json");
-const prePosts = require("../models/prePost.js");
 const postModel = require("../models/post.js");
 const profiles = require("../models/profiles.js");
 const mongoose = require("mongoose");
 const mongoUrl = require("../tokens.json").mongodb;
-const db = require('quick.db');
+const db = require("quick.db");
 
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true
@@ -24,27 +23,20 @@ module.exports = {
     if (!mods.includes(message.author.id)) return message.channel.send("You don't have permission to do that.");
     const msg = await message.channel.send(`${loading} Approving post...`);
 
-    prePosts.findOne({
-      id: args[0]
+    postModel.findOne({
+      id: args[0],
+      state: "POST_UNAPPROVED"
     }, async (err, post) => {
       if (err) console.log(err);
   
       if (!post) return msg.edit(replies.noId + ` \`#${args[0]}\`.`);
 
-      prePosts.findOneAndDelete({ id: post.id }, (err, x) => console.log(err)); // eslint-disable-line no-unused-vars
+      post.state = "POST_APPROVED";
 
-      const newPost = new postModel({
-        id: post.id,
-        authorID: post.authorID,
-        uploadedAt: post.uploadedAt,
-        url: post.url,
-        upVotes: 0,
-        downVotes: 0,
-        approvedBy: message.author.id
-      });
+      await post.save().catch(e => console.log(e));
 
-      await newPost.save().catch(e => console.log(e));
       client.memes.shift();
+
       profiles.findOne({
         authorID: post.authorID
       }, async (err, res) => {
@@ -65,6 +57,7 @@ module.exports = {
 
         await res.save().catch(e => console.log(e));
       });
+
       msg.edit(`Successfully approved post with id \`#${post.id}\``);
       const user = await client.fetchUser(post.authorID);
       db.add(`approvedMemes.${message.author.id}`, 1);

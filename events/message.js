@@ -15,12 +15,16 @@ module.exports = class {
       if (!message.channel.permissionsFor(message.guild.me).missing("SEND_MESSAGES")) return;
     }
 
-    if(message.content.startsWith("egg")) return message.channel.send("The prefix has been changed to \`wii\`.")
+    if (message.content.startsWith("egg ")) return message.channel.send("The prefix has been changed to `wii`.");
 
-    const mentionPrefix = new RegExp(`^<@!?${this.client.user.id}>( |)$`);  
-    if (message.content.toLowerCase().indexOf(prefix) !== 0 || message.content.match(mentionPrefix)) return;
+    // const mentionPrefix = new RegExp(`^<@!?${this.client.user.id}>( |)$`);  
+    if (message.content.toLowerCase().indexOf(prefix) !== 0) return;
   
+
+
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
+  
+
     const command = args.shift().toLowerCase();
     const cmd = this.client.commands.get(command) || this.client.commands.find(c => c.aliases && c.aliases.includes(command));
     if (!cmd) {

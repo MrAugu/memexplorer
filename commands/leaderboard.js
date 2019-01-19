@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const mongoUrl = require("../tokens.json").mongodb;
-const posts = require("../models/post.js");
+const posts = require("../models/post.js"); // eslint-disable-line no-unused-vars
 const users = require("../models/profiles.js");
 const { invisible } = require("../data/colors.json");
 const { loading, wiiP } = require("../data/emojis.json");
@@ -14,26 +14,26 @@ module.exports = {
   name: "leaderboard",
   description: "View the people with the most Wii Points.",
   cooldown: "5",
-  async execute (client, message, args) {
-    const msg = await message.channel.send(`${loading} Fetching leaderboard...`)
+  async execute (client, message, args) { // eslint-disable-line no-unused-vars
+    const msg = await message.channel.send(`${loading} Fetching leaderboard...`);
 
     users.find().sort([["wiiPoints", "descending"]]).exec(async (err, res) => {
-        if (err) console.log(err);
-        const lb = [];
+      if (err) console.log(err);
+      const lb = [];
 
-        for (var i = 0; i < 10; i++) {
-            try {
-                const u = await client.fetchUser(res[i].authorID);
-                lb.push(`**${i+1}.** ${u.tag} - ${wiiP} **${res[i].wiiPoints}** Wii Points`);
-            } catch (e) {} // eslint-disable-line no-empty
-        }
+      for (var i = 0; i < 10; i++) {
+        try {
+          const u = await client.fetchUser(res[i].authorID);
+          lb.push(`**${i+1}.** ${u.tag} - ${wiiP} **${res[i].wiiPoints}** Wii Points`);
+        } catch (e) {} // eslint-disable-line no-empty
+      }
 
-        const embed = new Discord.RichEmbed()
+      const embed = new Discord.RichEmbed()
         .setAuthor("Global Leaderboard", client.user.avatarURL)
         .setDescription(`${lb.join("\n")}`)
         .setTimestamp()
         .setColor(invisible);
-        msg.edit(embed);
+      msg.edit(embed);
     });
   },
 };

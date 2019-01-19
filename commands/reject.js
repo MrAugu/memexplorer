@@ -3,11 +3,10 @@ const { downloading, rejected } = require("../data/emojis.json");
 const { logs } = require("../data/channels.json");
 const { mods } = require("../settings.json");
 const replies = require("../data/replies.json");
-const prePosts = require("../models/prePost.js");
-const rejectedPosts = require("../models/rejectedPost.js");
+const prePosts = require("../models/post.js");
 const mongoose = require("mongoose");
 const mongoUrl = require("../tokens.json").mongodb;
-const db = require('quick.db');
+const db = require("quick.db");
 
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true
@@ -28,24 +27,16 @@ module.exports = {
     if (!reason) return msg.edit(replies.noReason);
 
     prePosts.findOne({
-      id: args[0]
+      id: args[0],
+      state: "POST_UNAPPROVED"
     }, async (err, post) => {
       if (err) console.log(err);
 
       if (!post) return msg.edit(replies.noId  + ` \`#${args[0]}\`.`);
 
-      prePosts.findOneAndDelete({ id: post.id }, (err, x) => console.log(err)); // eslint-disable-line no-unused-vars
+      post.state = "POST_REJECTED";
 
-      const newPost = new rejectedPosts({
-        id: post.id,
-        authorID: post.authorID,
-        uploadedAt: post.uploadedAt,
-        url: post.url,
-        rejectedBy: message.author.id,
-        reason: reason
-      });
-
-      newPost.save().catch(e => console.log(e));
+      post.save().catch(e => console.log(e));
 
       msg.edit(`Successfully rejected post with id \`#${post.id}\``);
       const user = await client.fetchUser(post.authorID);

@@ -1,7 +1,8 @@
 const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
 const { invisible } = require("../data/colors.json"); // eslint-disable-line no-unused-vars
-const { loading, rejected } = require("../data/emojis.json");
+const { loading } = require("../data/emojis.json");
 const { mods } = require("../settings.json");
+const { logs } = require("../data/channels.json");
 const replies = require("../data/replies.json");
 const posts = require("../models/post.js");
 const mongoose = require("mongoose");
@@ -24,11 +25,12 @@ module.exports = {
     if (!reason) return msg.edit(replies.noReason);
 
     posts.findOne({
-      id: args[0]
+      id: args[0],
+      state: "POST_APPROVED"
     }, async (err, post) => {
       if (!post) return msg.edit("Couldn't find any post with this id.");
-      posts.findOneAndDelete({ id: post.id });
-
+    
+      post.state = "POST_DELETED";
       const user = await client.fetchUser(post.authorID);
       msg.edit(`Deleted post \`#${post.id}\` from database.`);
       client.channels.get(logs).send(`🗑 **${message.author.tag}** (${message.author.id}) removed a post with id \`#${post.id}\` submitted by **${user.tag}** (${post.authorID}). Reason: ${reason}`);
