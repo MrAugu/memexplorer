@@ -12,4 +12,4 @@ const postSchema = mongoose.Schema({
   votes: Array
 });
 
-module.exports = mongoose.model("betaPosts", postSchema);
+module.exports = mongoose.model("posts", postSchema);
