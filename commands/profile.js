@@ -35,24 +35,24 @@ module.exports = {
         await newUser.save().catch(e => console.log(e));
         
         const embed = new Discord.RichEmbed()
-        .setThumbnail(user.user.displayAvatarURL)
-        .addField("User", `${user.user.tag}`, true)
-        .addField("Wii Points", `${wiiP} 0`, true)
-        .addField("Bio", "No bio set")
-        .setFooter(`0 posts`)
-        .setColor(invisible)
-        .setTimestamp();
+          .setThumbnail(user.user.displayAvatarURL)
+          .addField("User", `${user.user.tag}`, true)
+          .addField("Wii Points", `${wiiP} 0`, true)
+          .addField("Bio", "No bio set")
+          .setFooter("0 posts")
+          .setColor(invisible)
+          .setTimestamp();
         return msg.edit(embed);
       }
 
       const embed = new Discord.RichEmbed()
-      .setThumbnail(user.user.displayAvatarURL)
-      .addField("User", `${user.user.tag}`, true)
-      .addField("Wii Points", `${wiiP} ${u.wiiPoints}`, true)
-      .addField("Bio", `${u.bio}`)
-      .setFooter(`${u.totalPosts} posts`)
-      .setColor(invisible)
-      .setTimestamp();
+        .setThumbnail(user.user.displayAvatarURL)
+        .addField("User", `${user.user.tag}`, true)
+        .addField("Wii Points", `${wiiP} ${u.wiiPoints}`, true)
+        .addField("Bio", `${u.bio}`)
+        .setFooter(`${u.totalPosts} posts`)
+        .setColor(invisible)
+        .setTimestamp();
       return msg.edit(embed);
     });
   },

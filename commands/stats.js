@@ -19,18 +19,18 @@ module.exports = {
     const mins = Math.floor((totalSeconds / 60) % 60);
 
     const embed = new Discord.RichEmbed()
-    .setAuthor(client.user.username, client.user.avatarURL)
-    .setColor(invisible)
-    .setThumbnail(client.user.avatarURL)
-    .addField("Born On", client.user.createdAt)
-    .addField("Current Version", version, true)
-    .addField("Messages Sent", `${botMessages} messages`, true)
-    .addField("Servers", `${client.guilds.size} servers`, true)
-    .addField("Users", `${client.users.size.toLocaleString()} users`, true)
-    .addField("Ping", `Latency \`${msg.createdTimestamp - message.createdTimestamp}ms\` | API Latency \`${Math.round(client.ping)}ms\``)
-    .addField("Uptime", `${days} days, ${hours} hours, ${mins} minutes, and ${realTotalSecs} seconds`)
-    .setFooter("Dev: Tetra#0001 & MrAugu#9016")
-    .setTimestamp();
+      .setAuthor(client.user.username, client.user.avatarURL)
+      .setColor(invisible)
+      .setThumbnail(client.user.avatarURL)
+      .addField("Born On", client.user.createdAt)
+      .addField("Current Version", version, true)
+      .addField("Messages Sent", `${botMessages} messages`, true)
+      .addField("Servers", `${client.guilds.size} servers`, true)
+      .addField("Users", `${client.users.size.toLocaleString()} users`, true)
+      .addField("Ping", `Latency \`${msg.createdTimestamp - message.createdTimestamp}ms\` | API Latency \`${Math.round(client.ping)}ms\``)
+      .addField("Uptime", `${days} days, ${hours} hours, ${mins} minutes, and ${realTotalSecs} seconds`)
+      .setFooter("Dev: Tetra#0001 & MrAugu#9016")
+      .setTimestamp();
     await msg.edit(embed);
   },
 };
