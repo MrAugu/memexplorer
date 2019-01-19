@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const { green, red } = require('../data/colors.json');
-const { avatar } = require('../settings.json');
 const { events } = require('../data/channels.json');
 const moment = require('moment');
 const db = require('quick.db');
@@ -12,7 +11,7 @@ module.exports = class {
 
   async run (guild) {
       let embed = new Discord.RichEmbed()
-      .setAuthor(`${this.client.user.username} | ${this.client.guilds.size} servers`, avatar)
+      .setAuthor(`${this.client.user.username} | ${this.client.guilds.size} servers`, client.user.avatarURL)
       .setColor(green)
       .setThumbnail(guild.iconURL)
       .setDescription(`${this.client.user.username} has been **added** to a server.`)

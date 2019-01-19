@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const db = require("quick.db");
-const { avatar, version } = require("../settings.json");
 const { invisible } = require("../data/colors.json");
 const { loading, typing } = require("../data/emojis.json"); // eslint-disable-line no-unused-vars
 
@@ -19,9 +18,9 @@ module.exports = {
     const mins = Math.floor((totalSeconds / 60) % 60);
 
     const embed = new Discord.RichEmbed()
-    .setAuthor(client.user.username, avatar)
+    .setAuthor(client.user.username, client.user.avatarURL)
     .setColor(invisible)
-    .setThumbnail(avatar)
+    .setThumbnail(client.user.avatarURL)
     .addField("Born On", client.user.createdAt)
     .addField("Current Version", version, true)
     .addField("Messages Sent", `${botMessages} messages`, true)
