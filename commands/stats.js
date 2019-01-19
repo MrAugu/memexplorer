@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const db = require("quick.db");
 const { invisible } = require("../data/colors.json");
 const { loading, typing } = require("../data/emojis.json"); // eslint-disable-line no-unused-vars
+const { version } = require("../settings.json");
 
 module.exports = {
   name: "stats",
