@@ -1,2 +1,2 @@
-# wii
-A meme bot
+#Wii
+Meme bot
