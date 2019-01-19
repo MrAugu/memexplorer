@@ -27,14 +27,14 @@ module.exports = {
     try {
       let img;
       if (!args[0]) {
-        if (!message.attachments.first()) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`egg upload <image>\``);
+        if (!message.attachments.first()) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`Wii upload <image>\``);
         img = message.attachments.first().url;
-        if (!img) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`egg upload <image>\``);
+        if (!img) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`Wii upload <image>\``);
       
       } else if (validUrl.isUri(args[0])) {
         img = args[0];
       } else {
-        return msg.edit(`That was not a valid url ${message.author.mention}.\nCorrect Usage: \`egg upload <image>\``);
+        return msg.edit(`That was not a valid url ${message.author.mention}.\nCorrect Usage: \`Wii upload <image>\``);
       }
 
       if (!img) return msg.edit(replies.noImg);
