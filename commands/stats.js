@@ -5,7 +5,7 @@ const { loading, typing } = require("../data/emojis.json"); // eslint-disable-li
 
 module.exports = {
   name: "stats",
-  description: "Egg's stats",
+  description: "Wii's stats",
   cooldown: "5",
   async execute (client, message, args) { // eslint-disable-line no-unused-vars
     const msg = await message.channel.send(`${loading} Gathering stats...`);

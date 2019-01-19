@@ -3,7 +3,7 @@ const { server } = require("../settings.json");
 
 module.exports = {
   name: "help",
-  description: "Sends you a dm of detailed list of Egg's commands.",
+  description: "Sends you a dm of detailed list of Wii's commands.",
   aliases: ["commands"],
   async execute (bot, message, args) {
       
@@ -16,8 +16,8 @@ module.exports = {
       return message.channel.send(`
 **List of available commands**
 
-Type \`egg <command>\` to use a command. 
-To get more info on a specific command do \`egg help <command>\`
+Type \`wii <command>\` to use a command. 
+To get more info on a specific command do \`wii help <command>\`
 
 **bio** - set your bio
 **invite** - invite link for the bot
@@ -42,7 +42,7 @@ Need more help? Join the support server: ${server}
 
       if (command.description) data.push(`**Description:** ${command.description}`);
       if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(", ")}`);
-      if (command.usage) data.push(`**Usage:** \`egg ${command.name} ${command.usage}\``);
+      if (command.usage) data.push(`**Usage:** \`wii ${command.name} ${command.usage}\``);
 
       data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
 
