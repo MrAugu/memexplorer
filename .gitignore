@@ -1,3 +1,5 @@
 node_modules
 tokens.json
 json.sqlite
+package-log.json
+.eslintrc.json
