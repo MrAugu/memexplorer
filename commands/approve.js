@@ -52,10 +52,11 @@ module.exports = {
 
           await newProfile.save().catch(e => console.log(e));
         }
-
-        res.totalPosts = res.totalPosts + 1;
-
-        await res.save().catch(e => console.log(e));
+        
+        if (res) {
+          res.totalPosts = res.totalPosts + 1;
+          await res.save().catch(e => console.log(e));
+        } 
       });
 
       msg.edit(`Successfully approved post with id \`#${post.id}\``);
