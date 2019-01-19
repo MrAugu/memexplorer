@@ -10,7 +10,7 @@ module.exports = {
   cooldown: "5",
   async execute (client, message, args) { // eslint-disable-line no-unused-vars
     const msg = await message.channel.send(`${loading} Gathering stats...`);
-    const botMessages = await db.fetch(`botMessages_${client.user.id}`);
+    const botMessages = await db.fetch(`botMessages.${client.user.id}`);
 
     const totalSeconds = process.uptime();
     const realTotalSecs = Math.floor(totalSeconds % 60);
