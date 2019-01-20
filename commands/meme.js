@@ -56,7 +56,7 @@ module.exports = {
             await msg.react("⬆");
             await msg.react("⬇");
             const filter = (r) => r.emoji.name === "⬆" || r.emoji.name === "⬇";
-            const collector = msg.createReactionCollector(filter, { time: 120000 });
+            const collector = msg.createReactionCollector(filter, { time: 10000 });
             collector.on("collect", (r) => {
               if (r.emoji.name === "⬆") {
                 meme.upVotes += 1;
