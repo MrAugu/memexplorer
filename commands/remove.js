@@ -31,6 +31,8 @@ module.exports = {
       if (!post) return msg.edit("Couldn't find any post with this id.");
     
       post.state = "POST_DELETED";
+      post.removedBy = message.author.id;
+      
       await post.save().catch(e => console.log(e));
       const user = await client.fetchUser(post.authorID);
       msg.edit(`Deleted post \`#${post.id}\` from database.`);

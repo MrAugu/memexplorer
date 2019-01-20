@@ -40,6 +40,10 @@ module.exports = {
 
             if (!meme) return msg.edit(replies.meme);
           
+            meme.votes.push(message.author.tag);
+
+            await meme.save().catch(e => console.log(e));
+
             const t = ms(Date.now() - meme.uploadedAt);
             const time = convertTime(t);
 
@@ -66,6 +70,21 @@ module.exports = {
               }
             });
             collector.on("end", async c => { // eslint-disable-line no-unused-vars
+              /*for (const i of c) {
+                if (i[1].author.id !== client.user.id) {
+                  if (meme.votes.includes(i[1].author.id)) {
+                    if (i[0] === "⬆") {
+                      meme.upVotes += 1;
+                      res.wiiPoints += 1;
+                      meme.votes.push(i[1].author.id);
+                    } else if (i[0] === "⬇") {
+                      meme.downVotes += 1;
+                      meme.votes.push(i[1].author.id);
+                    }
+                  }
+                }
+              }*/
+              
               await meme.save().catch(e => console.log(e));
               await res.save().catch(e => console.log(e));
             });

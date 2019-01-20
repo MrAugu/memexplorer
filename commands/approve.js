@@ -48,7 +48,9 @@ module.exports = {
             authorID: post.authorID,
             wiiPoints: 0,
             bio: "No bio set",
-            totalPosts: 1
+            totalPosts: 1,
+            items: [],
+            badges: []
           });
 
           await newProfile.save().catch(e => console.log(e));
