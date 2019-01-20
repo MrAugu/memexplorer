@@ -7,7 +7,7 @@ const postSchema = mongoose.Schema({
   url: String,
   upVotes: Number,
   downVotes: Number,
-  aprovedBy: String,
+  approvedBy: String,
   state: String,
   votes: Array
 });
