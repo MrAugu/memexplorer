@@ -23,7 +23,7 @@ module.exports = {
       for (var i = 0; i < 10; i++) {
         try {
           const user = await client.fetchUser(res[i].authorID);
-          lb.push(`**${i+1}.** \`ID: #${res[i].id}\` posted by **${user.tag}** with **${res[i].upVotes - res[i].downVotes} upvotes**.`);
+          lb.push(`**${i+1}.** \`ID: #${res[i].id}\` posted by **${user.tag}** with **${res[i].upVotes} upvotes**.`);
         } catch (e) {} // eslint-disable-line no-empty
       }
 
