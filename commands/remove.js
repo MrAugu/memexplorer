@@ -31,13 +31,14 @@ module.exports = {
       if (!post) return msg.edit("Couldn't find any post with this id.");
     
       post.state = "POST_DELETED";
+      await post.save().catch(e => console.log(e));
       const user = await client.fetchUser(post.authorID);
       msg.edit(`Deleted post \`#${post.id}\` from database.`);
       client.channels.get(logs).send(`🗑 **${message.author.tag}** (${message.author.id}) removed a post with id \`#${post.id}\` submitted by **${user.tag}** (${post.authorID}). Reason: ${reason}`);
       try {
-        user.send(`Your post with \`#${post.id}\` has been deleted by \`${message.author.tag}\`. Reason: ${reason}`);
+        await user.send(`Your post with \`#${post.id}\` has been deleted by \`${message.author.tag}\`. Reason: ${reason}`);
       } catch (e) {
-        console.log(e);
+        return;
       }
     });
   },  
