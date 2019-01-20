@@ -32,6 +32,7 @@ module.exports = {
       if (!post) return msg.edit(replies.noId + ` \`#${args[0]}\`.`);
 
       post.state = "POST_APPROVED";
+      post.approvedBy = message.author.id;
 
       await post.save().catch(e => console.log(e));
 
