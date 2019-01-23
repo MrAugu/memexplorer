@@ -6,7 +6,7 @@ const { version } = require("../settings.json");
 
 module.exports = {
   name: "stats",
-  description: "Wii's stats",
+  description: `Bot's stats`,
   cooldown: "5",
   async execute (client, message, args) { // eslint-disable-line no-unused-vars
     const msg = await message.channel.send(`${loading} Gathering stats...`);

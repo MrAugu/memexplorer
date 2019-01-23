@@ -1,5 +1,5 @@
 const Discord = require ("discord.js"); // eslint-disable-line no-unused-vars
-const { server } = require("../settings.json");
+const { server, currency } = require("../settings.json");
 
 module.exports = {
   name: "help",
@@ -16,12 +16,12 @@ module.exports = {
       return message.channel.send(`
 **List of available commands**
 
-Type \`wii <command>\` to use a command. 
-To get more info on a specific command do \`wii help <command>\`
+Type \`${client.user.username} <command>\` to use a command. 
+To get more info on a specific command do \`${client.user.username} help <command>\`
 
 **bio** - set your bio
 **invite** - invite link for the bot
-**leaderboard** - displays the users with the most Wii Points
+**leaderboard** - displays the users with the most ${currency}
 **meme** - displays a meme
 **ping** - sends the bot's ping
 **popular** - displays the posts with the most upvotes

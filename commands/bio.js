@@ -29,9 +29,7 @@ module.exports = {
         const newUser = new profiles({
           authorID: message.author.id,
           wiiPoints: 0,
-          bio: args.join(" "),
-          items: [],
-          badges: []
+          bio: args.join(" ")
         });
 
         await newUser.save().catch(e => console.log(e));

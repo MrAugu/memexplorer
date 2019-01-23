@@ -3,6 +3,7 @@ const validUrl = require("valid-url");
 const { downloading, loading } = require("../data/emojis.json");
 const { invisible } = require("../data/colors.json");
 const { posts } = require("../data/channels.json");
+const { prefix } = require("../settings.json");
 const replies = require("../data/replies.json");
 const prePost = require("../models/post.js");
 const mongoose = require("mongoose");
@@ -27,14 +28,14 @@ module.exports = {
     try {
       let img;
       if (!args[0]) {
-        if (!message.attachments.first()) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`Wii upload <image>\``);
+        if (!message.attachments.first()) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`${prefix} upload <image>\``);
         img = message.attachments.first().url;
-        if (!img) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`Wii upload <image>\``);
+        if (!img) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`#${prefix} upload <image>\``);
       
       } else if (validUrl.isUri(args[0])) {
         img = args[0];
       } else {
-        return msg.edit(`That was not a valid url ${message.author.mention}.\nCorrect Usage: \`Wii upload <image>\``);
+        return msg.edit(`That was not a valid url ${message.author.mention}.\nCorrect Usage: \`${prefix} upload <image>\``);
       }
 
       if (!img) return msg.edit(replies.noImg);

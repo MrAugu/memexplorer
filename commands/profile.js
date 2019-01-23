@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const { invisible } = require("../data/colors.json");
 const { loading, wiiP } = require("../data/emojis.json");
+const { currency } = require("../settings.json");
 const replies = require("../data/replies.json");
 const profiles = require("../models/profiles.js");
 const mongoose = require("mongoose");
@@ -30,27 +31,15 @@ module.exports = {
           authorID: user.id,
           wiiPoints: 0,
           bio: "No bio set",
-          totalPosts: 0,
-          items: [],
-          badges: []
+          totalPosts: 0
         });
         await newUser.save().catch(e => console.log(e));
-        
-        const embed = new Discord.RichEmbed()
-          .setThumbnail(user.user.displayAvatarURL)
-          .addField("User", `${user.user.tag}`, true)
-          .addField("Wii Points", `${wiiP} 0`, true)
-          .addField("Bio", "No bio set")
-          .setFooter("0 posts")
-          .setColor(invisible)
-          .setTimestamp();
-        return msg.edit(embed);
       }
 
       const embed = new Discord.RichEmbed()
         .setThumbnail(user.user.displayAvatarURL)
         .addField("User", `${user.user.tag}`, true)
-        .addField("Wii Points", `${wiiP} ${u.wiiPoints}`, true)
+        .addField(currency, `${wiiP} ${u.wiiPoints}`, true)
         .addField("Bio", `${u.bio}`)
         .setFooter(`${u.totalPosts} posts`)
         .setColor(invisible)

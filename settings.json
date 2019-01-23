@@ -2,6 +2,7 @@
     "prefix": "+",
     "version": "0.1.0",
     "status": "Wii Sports",
+    "currency": "Wii Points",
     "server": "https://discord.gg/ZJ2jm4x",
     "owner": "275831434772742144",
     "devs": ["275831434772742144", "414764511489294347"],

@@ -4,6 +4,7 @@ const posts = require("../models/post.js"); // eslint-disable-line no-unused-var
 const users = require("../models/profiles.js");
 const { invisible } = require("../data/colors.json");
 const { loading, wiiP } = require("../data/emojis.json");
+const { currency } = require("../settings.json");
 const Discord = require("discord.js");
 
 mongoose.connect(mongoUrl, {
@@ -12,7 +13,7 @@ mongoose.connect(mongoUrl, {
 
 module.exports = {
   name: "leaderboard",
-  description: "View the people with the most Wii Points.",
+  description: `View the people with the most ${currency}.`,
   cooldown: "5",
   async execute (client, message, args) { // eslint-disable-line no-unused-vars
     const msg = await message.channel.send(`${loading} Fetching leaderboard...`);
@@ -24,7 +25,7 @@ module.exports = {
       for (var i = 0; i < 10; i++) {
         try {
           const u = await client.fetchUser(res[i].authorID);
-          lb.push(`**${i+1}.** ${u.tag} - ${wiiP} **${res[i].wiiPoints}** Wii Points`);
+          lb.push(`**${i+1}.** ${u.tag} - ${wiiP} **${res[i].wiiPoints}** ${currency}`);
         } catch (e) {} // eslint-disable-line no-empty
       }
 

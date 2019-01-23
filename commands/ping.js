@@ -4,7 +4,7 @@ const { invisible } = require("../data/colors.json");
 
 module.exports = {
   name: "ping",
-  description: "Wii's latency",
+  description: `Bot's latency`,
   async execute (client, message, args) { // eslint-disable-line no-unused-vars
     const msg = await message.channel.send(`${loading} Pinging...`);
     const embed = new Discord.RichEmbed()

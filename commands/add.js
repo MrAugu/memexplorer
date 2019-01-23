@@ -1,9 +1,9 @@
 const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
-const { downloading, rejected } = require("../data/emojis.json");
+const { loading } = require("../data/emojis.json");
 const { logs } = require("../data/channels.json");
-const { mods } = require("../settings.json");
+const { owner, currency } = require("../settings.json");
+const profiles = require("../models/profiles.js");
 const replies = require("../data/replies.json");
-const prePosts = require("../models/post.js");
 const mongoose = require("mongoose");
 const mongoUrl = require("../tokens.json").mongodb;
 const db = require("quick.db");
@@ -13,18 +13,36 @@ mongoose.connect(mongoUrl, {
 });
 
 module.exports = {
-  name: "reject",
-  description: "reject a post",
-  usage: "<id> <reason>",
+  name: "add",
+  description: "Adds a user to a specific group.",
+  usage: "<group (supporter, approver)> <user>",
   args: true,
-  cooldown: "5",
-  aliases: ["r"],
   async execute (client, message, args) {
-    if (!mods.includes(message.author.id)) return message.channel.send("You don't have permission to do that.");
-    const msg = await message.channel.send(`${downloading} Rejecting post...`);
+    if (!owner.includes(message.author.id)) return message.channel.send("You don't have permission to do that.");
+    if(args[0] != "supporter" || args[0] != "approver") return message.channel.send("That's not a valid group. Valid groups: Supporter, Approver.")
+    if(!args[1]) return message.channel.send("Please specifiy a user for me to add to this group.")
 
-    const reason = args.slice(1).join(" ");
-    if (!reason) return msg.edit(replies.noReason);
+    const msg = await message.channel.send(`${loading} Adding user to ${args[0]} group...`);
+
+    const user = message.mentions.members.first() || message.guild.members.get(args[0]) || message.member;
+    if (!user) return msg.edit(replies.noUser);
+
+    profiles.findOne({
+      authorID: user.id
+    }, async (err, u) => {
+      if (err) console.log(err);
+
+      const embed = new Discord.RichEmbed()
+        .setThumbnail(user.user.displayAvatarURL)
+        .addField("User", `${user.user.tag}`, true)
+        .addField(currency, `${wiiP} ${u.wiiPoints}`, true)
+        .addField("Bio", `${u.bio}`)
+        .setFooter(`${u.totalPosts} posts`)
+        .setColor(invisible)
+        .setTimestamp();
+      return msg.edit(embed);
+    });
+
 
     prePosts.findOne({
       id: args[0],
