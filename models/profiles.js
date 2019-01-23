@@ -4,7 +4,8 @@ const profileSchema = mongoose.Schema({
   authorID: String,
   wiiPoints: Number,
   bio: String,
-  totalPosts: Number
+  totalPosts: Number,
+  blacklisted: Boolean,
 });
 
 module.exports = mongoose.model("profiles", profileSchema);
