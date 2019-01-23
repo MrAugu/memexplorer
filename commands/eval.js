@@ -19,7 +19,7 @@ module.exports = {
     if (typeof evaled !== "string")
       evaled = require("util").inspect(evaled);
     if (evaled.includes(client.token)) {
-      return message.channel.send("Nah fam");
+      return msg.edit("Nah fam");
     }
 
     try {
