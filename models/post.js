@@ -7,9 +7,11 @@ const postSchema = mongoose.Schema({
   url: String,
   upVotes: Number,
   downVotes: Number,
-  aprovedBy: String,
+  approvedBy: String,
   state: String,
-  votes: Array
+  votes: Array,
+  rejectedBy: String,
+  removedBy: String
 });
 
 module.exports = mongoose.model("posts", postSchema);

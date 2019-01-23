@@ -30,7 +30,9 @@ module.exports = {
           authorID: user.id,
           wiiPoints: 0,
           bio: "No bio set",
-          totalPosts: 0
+          totalPosts: 0,
+          items: [],
+          badges: []
         });
         await newUser.save().catch(e => console.log(e));
         

@@ -35,6 +35,9 @@ module.exports = {
       if (!post) return msg.edit(replies.noId  + ` \`#${args[0]}\`.`);
 
       post.state = "POST_REJECTED";
+      post.rejectedBy = message.author.id;
+
+      client.memes.shift();
 
       post.save().catch(e => console.log(e));
 

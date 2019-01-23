@@ -50,7 +50,7 @@ module.exports = {
         url: img,
         upVotes: 0,
         downVotes: 0,
-        aprovedBy: "NONE",
+        approvedBy: "NONE",
         state: "POST_UNAPPROVED",
         votes: []
       });

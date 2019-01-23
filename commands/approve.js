@@ -32,6 +32,7 @@ module.exports = {
       if (!post) return msg.edit(replies.noId + ` \`#${args[0]}\`.`);
 
       post.state = "POST_APPROVED";
+      post.approvedBy = message.author.id;
 
       await post.save().catch(e => console.log(e));
 
@@ -47,7 +48,9 @@ module.exports = {
             authorID: post.authorID,
             wiiPoints: 0,
             bio: "No bio set",
-            totalPosts: 1
+            totalPosts: 1,
+            items: [],
+            badges: []
           });
 
           await newProfile.save().catch(e => console.log(e));
@@ -64,9 +67,9 @@ module.exports = {
       db.add(`approvedMemes.${message.author.id}`, 1);
       client.channels.get(logs).send(`${approved} **${message.author.tag}** (${message.author.id}) approved a post with id \`#${post.id}\` submitted by **${user.tag}** (${user.id}).`);
       try {
-        user.send(`${approved} **${message.author.tag}** has approved your post with id \`#${post.id}\`. You can view your post by doing \`${prefix}meme ${post.id}\`.`);
+        await user.send(`${approved} **${message.author.tag}** has approved your post with id \`#${post.id}\`. You can view your post by doing \`${prefix}meme ${post.id}\`.`);
       } catch (e) {
-        console.log(e);
+        return;
       }
     });
   },
