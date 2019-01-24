@@ -24,7 +24,7 @@ module.exports = {
 
     const msg = await message.channel.send(`${loading} Adding user to ${args[0]} group...`);
 
-    const user = message.mentions.members.first() || message.guild.members.get(args[0]) || message.member;
+    const user = message.mentions.members.first() || message.guild.members.get(args[0]);
     if (!user) return msg.edit(replies.noUser);
 
     profiles.findOne({
@@ -49,7 +49,7 @@ module.exports = {
       }
 
       const username = await client.fetchUser(u.authorID);
-      msg.edit(`Added **${username}**, as a **${args[1]}**`)
+      msg.edit(`Added **${user.user.tag}**, as a **${args[1]}**`)
 
       await u.save().catch(e => console.log(e));
     });
