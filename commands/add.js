@@ -23,7 +23,7 @@ module.exports = {
     if(!args[1]) return message.channel.send("Please specify a group to add the user to.");
     if(args[1].toLowerCase() !== "supporter" && args[1].toLowerCase() !== "approver" && args[1].toLowerCase() !== "developer" && args[1].toLowerCase() !== "voter") return message.channel.send("That's not a valid group. Valid groups: supporoter, approver, voter, developer.")
 
-    const msg = await message.channel.send(`${loading} Adding user to ${args[0]} group...`);
+    const msg = await message.channel.send(`${loading} Adding user to ${args[1]} group...`);
 
     const user = message.mentions.members.first() || message.guild.members.get(args[0]);
     if (!user) return msg.edit(replies.noUser);
