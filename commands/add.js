@@ -15,12 +15,12 @@ mongoose.connect(mongoUrl, {
 module.exports = {
   name: "add",
   description: "Adds a user to a specific group.",
-  usage: "<group (supporter, approver)> <user>",
+  usage: "<user> <group(supporter, approver)>",
   args: true,
   async execute (client, message, args) {
     if (!owner.includes(message.author.id)) return message.channel.send("You don't have permission to do that.");
-    if(args[0] != "supporter" || args[0] != "approver") return message.channel.send("That's not a valid group. Valid groups: Supporter, Approver.")
-    if(!args[1]) return message.channel.send("Please specifiy a user for me to add to this group.")
+    if(!args[0]) return message.channel.send("Please specifiy a user for me to add to this group.")
+    if(args[1].toLowerCase() !== "supporter" && args[1].toLowerCase() !== "approver" && args[1].toLowerCase() !== "developer" && args[1].toLowerCase() !== "voter") return message.channel.send("That's not a valid group. Valid groups: supporoter, approver, voter, developer.")
 
     const msg = await message.channel.send(`${loading} Adding user to ${args[0]} group...`);
 
@@ -31,43 +31,27 @@ module.exports = {
       authorID: user.id
     }, async (err, u) => {
       if (err) console.log(err);
-
-      const embed = new Discord.RichEmbed()
-        .setThumbnail(user.user.displayAvatarURL)
-        .addField("User", `${user.user.tag}`, true)
-        .addField(currency, `${wiiP} ${u.wiiPoints}`, true)
-        .addField("Bio", `${u.bio}`)
-        .setFooter(`${u.totalPosts} posts`)
-        .setColor(invisible)
-        .setTimestamp();
-      return msg.edit(embed);
-    });
-
-
-    prePosts.findOne({
-      id: args[0],
-      state: "POST_UNAPPROVED"
-    }, async (err, post) => {
-      if (err) console.log(err);
-
-      if (!post) return msg.edit(replies.noId  + ` \`#${args[0]}\`.`);
-
-      post.state = "POST_REJECTED";
-      post.rejectedBy = message.author.id;
-
-      client.memes.shift();
-
-      post.save().catch(e => console.log(e));
-
-      msg.edit(`Successfully rejected post with id \`#${post.id}\``);
-      const user = await client.fetchUser(post.authorID);
-      db.add(`rejectedMemes.${message.author.id}`, 1);
-      client.channels.get(logs).send(`${rejected} **${message.author.tag}** (${message.author.id}) rejected a post with id \`#${post.id}\` submitted by **${user.tag}** (${user.id}). Reason: ${reason}`);
-      try {
-        user.send(`${rejected} **${message.author.tag}** has rejected your post with id \`#${post.id}\`. Reason: ${reason}`);
-      } catch (e) {
-        console.log(e);
+      if(args[1].toLowerCase() === "supporter"){
+        u.supporter = true;
+      } else if(args[1].toLowerCase() === "supporterr"){
+        u.supporter = true;
+        u.supporterr = true;
+      } else if(args[1].toLowerCase() === "supporterrr"){
+        u.supporter = true;
+        u.supporterr = true;
+        u.supporterrr = true;
+      } else if(args[1].toLowerCase() === "approver"){
+        u.approver = true;
+      } else if(args[1].toLowerCase() === "voter"){
+        u.voted = true;
+      } else if(args[1].toLowerCase() === "developer"){
+        u.developer = true;
       }
+
+      const username = await client.fetchUser(u.authorID);
+      msg.edit(`Added **${username}**, as a **${args[1]}**`)
+
+      await u.save().catch(e => console.log(e));
     });
   },
 };

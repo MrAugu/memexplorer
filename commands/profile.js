@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const { invisible } = require("../data/colors.json");
-const { loading, wiiP } = require("../data/emojis.json");
+const emoji = require("../data/emojis.json");
 const { currency } = require("../settings.json");
 const replies = require("../data/replies.json");
 const profiles = require("../models/profiles.js");
@@ -16,7 +16,7 @@ module.exports = {
   description: "Displays the user's profile",
   usage: "<user>",
   async execute (client, message, args) {
-    const msg = await message.channel.send(`${loading} Fetching profile...`);
+    const msg = await message.channel.send(`${emoji.loading} Fetching profile...`);
 
     const user = message.mentions.members.first() || message.guild.members.get(args[0]) || message.member;
     if (!user) return msg.edit(replies.noUser);
@@ -31,15 +31,27 @@ module.exports = {
           authorID: user.id,
           wiiPoints: 0,
           bio: "No bio set",
-          totalPosts: 0
+          totalPosts: 0,
+          blacklisted: false,
+          voted: false,
+          supporter: false,
+          supporterr: false,
+          supporterrr: false,
+          approver: false,
+          developer: false,
         });
         await newUser.save().catch(e => console.log(e));
       }
 
+      let ranks = "";
+      if(u.voted) ranks += " " + emoji.voted;
+      if(u.supporter) ranks += " " + emoji.supporter;
+      if(u.approver) ranks += " " + emoji.approver;
+      if(u.developer) ranks += " " + emoji.developer;
       const embed = new Discord.RichEmbed()
         .setThumbnail(user.user.displayAvatarURL)
-        .addField("User", `${user.user.tag}`, true)
-        .addField(currency, `${wiiP} ${u.wiiPoints}`, true)
+        .addField("User", `${user.user.tag}${ranks}`, true)
+        .addField(currency, `${emoji.wiiP} ${u.wiiPoints}`, true)
         .addField("Bio", `${u.bio}`)
         .setFooter(`${u.totalPosts} posts`)
         .setColor(invisible)
