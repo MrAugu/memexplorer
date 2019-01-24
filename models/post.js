@@ -11,7 +11,7 @@ const postSchema = mongoose.Schema({
   state: String,
   votes: Array,
   rejectedBy: String,
-  removedBy: String
+  deletedBy: String
 });
 
 module.exports = mongoose.model("posts", postSchema);
