@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const postSchema = mongoose.Schema({
   id: Number,
+  title: String,
   authorID: String,
   uploadedAt: String,
   url: String,
