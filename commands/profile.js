@@ -44,10 +44,13 @@ module.exports = {
       }
 
       let ranks = "";
-      if(u.voted) ranks += " " + emoji.voted;
-      if(u.supporter) ranks += " " + emoji.supporter;
-      if(u.mod) ranks += " " + emoji.mod;
-      if(u.developer) ranks += " " + emoji.developer;
+      if(u.blacklisted) ranks += " " + emoji.blacklist;
+      else {
+        if(u.voted) ranks += " " + emoji.voted;
+        if(u.supporter) ranks += " " + emoji.supporter;
+        if(u.mod) ranks += " " + emoji.mod;
+        if(u.developer) ranks += " " + emoji.developer;
+      }
       const embed = new Discord.RichEmbed()
         .setThumbnail(user.user.displayAvatarURL)
         .addField("User", `${user.user.tag}${ranks}`, true)
