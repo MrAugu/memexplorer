@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const channelSchema = mongoose.Schema({
   channelID: Number,
-  ignored: Boolean
+  ignore: Boolean,
 });
 
-module.exports = mongoose.model("channel", channelSchema);
+module.exports = mongoose.model("channels", channelSchema);

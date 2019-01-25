@@ -49,13 +49,14 @@ module.exports = class {
     }, async (err, c) => {
       if (err) console.log(err);
       if (!c) {
-        const newChannel = new profiles({
+        const newChannel = new channels({
           channelID: message.channel.id,
-          ignored: false
+          ignore: false
         });
         await newChannel.save().catch(e => console.log(e));
       }
-      if(!c.ignored){
+      if(c.ignore === null) c.ignore = false;
+      if(!c.ignore){
         profiles.findOne({
           authorID: message.author.id
         }, async (err, u) => {
