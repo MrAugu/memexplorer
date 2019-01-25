@@ -10,7 +10,7 @@ const profileSchema = mongoose.Schema({
   supporter: Boolean,
   supporterr: Boolean,
   supporterrr: Boolean,
-  approver: Boolean,
+  mod: Boolean,
   developer: Boolean,
 });
 

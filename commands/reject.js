@@ -15,7 +15,7 @@ mongoose.connect(mongoUrl, {
 
 module.exports = {
   name: "reject",
-  description: "reject a post",
+  description: "Reject a post",
   usage: "<id> <reason>",
   args: true,
   cooldown: "5",
@@ -25,7 +25,7 @@ module.exports = {
       authorID: message.author.id
     }, async (err, u) => {
       if (err) console.log(err);
-      if(!u.approver) {
+      if(!u.mod) {
         return message.channel.send("You don't have permission to do that.");
       } else {
         const msg = await message.channel.send(`${downloading} Rejecting post...`);
@@ -60,6 +60,5 @@ module.exports = {
         });
       }
     });
-    if (!mods.includes(message.author.id)) return message.channel.send("You don't have permission to do that.");
   },
 };

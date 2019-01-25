@@ -37,7 +37,7 @@ module.exports = {
           supporter: false,
           supporterr: false,
           supporterrr: false,
-          approver: false,
+          mod: false,
           developer: false,
         });
         await newUser.save().catch(e => console.log(e));
@@ -46,7 +46,7 @@ module.exports = {
       let ranks = "";
       if(u.voted) ranks += " " + emoji.voted;
       if(u.supporter) ranks += " " + emoji.supporter;
-      if(u.approver) ranks += " " + emoji.approver;
+      if(u.mod) ranks += " " + emoji.mod;
       if(u.developer) ranks += " " + emoji.developer;
       const embed = new Discord.RichEmbed()
         .setThumbnail(user.user.displayAvatarURL)

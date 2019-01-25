@@ -15,13 +15,13 @@ mongoose.connect(mongoUrl, {
 module.exports = {
   name: "add",
   description: "Adds a user to a specific group.",
-  usage: "<user> <group(supporter, approver)>",
+  usage: "<user> <group(supporter, mod)>",
   args: true,
   async execute (client, message, args) {
     if (!owner.includes(message.author.id)) return message.channel.send("You don't have permission to do that.");
     if(!args[0]) return message.channel.send("Please specifiy a user.")
     if(!args[1]) return message.channel.send("Please specify a group to add the user to.");
-    if(args[1].toLowerCase() !== "supporter" && args[1].toLowerCase() !== "approver" && args[1].toLowerCase() !== "developer" && args[1].toLowerCase() !== "voter") return message.channel.send("That's not a valid group. Valid groups: supporoter, approver, voter, developer.")
+    if(args[1].toLowerCase() !== "supporter" && args[1].toLowerCase() !== "mod" && args[1].toLowerCase() !== "developer" && args[1].toLowerCase() !== "voter") return message.channel.send("That's not a valid group. Valid groups: supporoter, mod, voter, developer.")
 
     const msg = await message.channel.send(`${loading} Adding user to ${args[1]} group...`);
 
@@ -41,8 +41,8 @@ module.exports = {
         u.supporter = true;
         u.supporterr = true;
         u.supporterrr = true;
-      } else if(args[1].toLowerCase() === "approver"){
-        u.approver = true;
+      } else if(args[1].toLowerCase() === "mod"){
+        u.mod = true;
       } else if(args[1].toLowerCase() === "voter"){
         u.voted = true;
       } else if(args[1].toLowerCase() === "developer"){
