@@ -1,4 +1,7 @@
 const { prefix, mods } = require("../settings.json");
+const profiles = require("../models/profiles.js");
+const mongoose = require("mongoose");
+const mongoUrl = require("../tokens.json").mongodb;
 const fs = require("fs");
 const Discord = require("discord.js");
 const cooldowns = new Discord.Collection();
@@ -40,45 +43,65 @@ module.exports = class {
     db.add(`botMessages.${this.client.user.id}`, 1);
     db.add(`${cmd.name}.${this.client.user.id}`, 1);
   
-    // const blacklisted = await db.fetch(`blacklisted${message.guild.id}`);
-    // if (blacklisted === message.author.id) return reply("Seems like you're blacklisted for this guild.");
+    profiles.findOne({
+      authorID: message.author.id
+    }, async (err, u) => {
+        if (err) console.log(err);
+        if (!u) {
+          const newUser = new profiles({
+            authorID: user.id,
+            wiiPoints: 0,
+            bio: "No bio set",
+            totalPosts: 0,
+            blacklisted: false,
+            voted: false,
+            supporter: false,
+            supporterr: false,
+            supporterrr: false,
+            mod: false,
+            developer: false,
+          });
+          await newUser.save().catch(e => console.log(e));
+        }
+        if(!u.blacklisted){
+          if (cmd && !message.guild && cmd.guildOnly) return message.channel.send("I can't execute that command inside DMs!. Please run this command in a server.");
+          if (cmd && !args.length && cmd.args === true) return message.channel.send(`You didn't provide any arguments ${message.author}.\nCorrect Usage: \`${prefix}${cmd.name} ${cmd.usage}\``);
+      
+          if (!cooldowns.has(command.name)) {
+            cooldowns.set(command.name, new Discord.Collection());
+          }
+        
+          const now = Date.now();
+          const timestamps = cooldowns.get(command.name);
+          const cooldownAmount = cmd.cooldown * 100;
+      
+          if (!mods.includes(message.author.id)) {
+            if (!timestamps.has(message.author.id)) {
+              timestamps.set(message.author.id, now);
+              setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+            }
+            else {
+              const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+              if (now < expirationTime) {
+                const timeLeft = (expirationTime - now) / 1000;
+                return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${cmd.name}\` command.`);
+              }
+              timestamps.set(message.author.id, now);
+              setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+            }
+          }
+        
+          try {
+            cmd.execute(this.client, message, args);
+          } catch (e) {
+            console.error(e);
+            message.reply("There was an error trying to execute that command!");
+          }
+        }
+    });
   
     // const ignored = await db.fetch(`ignored${message.guild.id}`);
     // if (ignored === message.channel.id) return;
-  
-    if (cmd && !message.guild && cmd.guildOnly) return message.channel.send("I can't execute that command inside DMs!. Please run this command in a server.");
-    if (cmd && !args.length && cmd.args === true) return message.channel.send(`You didn't provide any arguments ${message.author}.\nCorrect Usage: \`${prefix}${cmd.name} ${cmd.usage}\``);
-
-    if (!cooldowns.has(command.name)) {
-      cooldowns.set(command.name, new Discord.Collection());
-    }
-  
-    const now = Date.now();
-    const timestamps = cooldowns.get(command.name);
-    const cooldownAmount = cmd.cooldown * 100;
-
-    if (!mods.includes(message.author.id)) {
-      if (!timestamps.has(message.author.id)) {
-        timestamps.set(message.author.id, now);
-        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-      }
-      else {
-        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-        if (now < expirationTime) {
-          const timeLeft = (expirationTime - now) / 1000;
-          return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${cmd.name}\` command.`);
-        }
-        timestamps.set(message.author.id, now);
-        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-      }
-    }
-  
-    try {
-      cmd.execute(this.client, message, args);
-    } catch (e) {
-      console.error(e);
-      message.reply("There was an error trying to execute that command!");
-    }
   }
 };
   

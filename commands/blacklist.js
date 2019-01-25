@@ -1,5 +1,5 @@
 const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
-const { loading } = require("../data/emojis.json");
+const { loading, blacklist } = require("../data/emojis.json");
 const { logs } = require("../data/channels.json");
 const replies = require("../data/replies.json");
 const profiles = require("../models/profiles.js");
@@ -45,7 +45,7 @@ module.exports = {
 
                 const username = await client.fetchUser(u.authorID);
                 msg.edit(`Blacklisted **${user.user.tag}** from the bot.`)
-                client.channels.get(logs).send(`🛡 **${message.author.tag}** (${message.author.id}) blacklisted **${user.tag}** (${user.id}). Reason: ${reason}`);
+                client.channels.get(logs).send(`${blacklist} **${message.author.tag}** (${message.author.id}) blacklisted **${user.user.tag}** (${user.id}). Reason: ${reason}`);
                 await u.save().catch(e => console.log(e));
             });
         }
