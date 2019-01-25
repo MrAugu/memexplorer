@@ -2,7 +2,7 @@ const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
 const { loading } = require("../data/emojis.json");
 const replies = require("../data/replies.json");
 const profiles = require("../models/profiles.js");
-const servers = require("../models/server.js");
+const channels = require("../models/channel.js");
 const mongoose = require("mongoose");
 const mongoUrl = require("../tokens.json").mongodb;
 
@@ -28,13 +28,21 @@ module.exports = {
         channel = message.mentions.channels.first().id;
     }
 
-    servers.findOne({
-        serverID: message.guild.id
-    }, async (err, s) => {
+    channels.findOne({
+        channelID: message.channel.id
+    }, async (err, c) => {
         if (err) console.log(err);
-        s.ignoredChannels.push(channel.id);
+        if (!c) {
+            const newChannel = new profiles({
+              channelID: message.channel.id,
+              ignored: true
+            });
+            await newChannel.save().catch(e => console.log(e));
+        } else {
+            c.ignored = true;
+        }
         msg.edit(`I will now ignore commands from ${args[0]}`)
-        await s.save().catch(e => console.log(e));
+        await c.save().catch(e => console.log(e));
     });
   },
 };

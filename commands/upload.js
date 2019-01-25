@@ -21,7 +21,7 @@ module.exports = {
   cooldown: "120",
   async execute (client, message, args) {
     
-    if (client.memes.length > 39) return message.channel.send("Already 40 memes queued for verification. Plesse wait for them to be verified by a moderator or an administrator first.");
+    //if (client.memes.length > 39) return message.channel.send("Already 40 memes queued for verification. Plesse wait for them to be verified by a moderator or an administrator first.");
     
     const msg = await message.channel.send(`${downloading} Uploading to database...`);
 
