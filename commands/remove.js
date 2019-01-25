@@ -18,7 +18,7 @@ module.exports = {
   usage: "<user> <group(supporter, mod)>",
   args: true,
   async execute (client, message, args) {
-    if (!owner.includes(message.author.id)) return message.channel.send("You don't have permission to do that.");
+    if (!owner.includes(message.author.id)) return message.channel.send(replies.noPerms);
     if(!args[0]) return message.channel.send("Please specifiy a user.")
     if(!args[1]) return message.channel.send("Please specify a group to remove the user from.");
     if(args[1].toLowerCase() !== "supporter" && args[1].toLowerCase() !== "mod" && args[1].toLowerCase() !== "developer" && args[1].toLowerCase() !== "voter") return message.channel.send("That's not a valid group. Valid groups: supporoter, mod, voter, developer.")

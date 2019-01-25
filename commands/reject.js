@@ -26,7 +26,7 @@ module.exports = {
     }, async (err, u) => {
       if (err) console.log(err);
       if(!u.mod) {
-        return message.channel.send("You don't have permission to do that.");
+        return message.channel.send(replies.noPerms);
       } else {
         const msg = await message.channel.send(`${downloading} Rejecting post...`);
 

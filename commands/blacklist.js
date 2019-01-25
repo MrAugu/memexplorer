@@ -21,7 +21,7 @@ module.exports = {
     }, async (err, person) => {
         if (err) console.log(err);
         if(!person.mod) {
-          return message.channel.send("You don't have permission to do that.");
+          return message.channel.send(replies.noPerms);
         } else {
             if(!args[0]) return message.channel.send("Please specifiy a user.")
             const reason = args.slice(1).join(" ");
