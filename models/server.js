@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const postSchema = mongoose.Schema({
-  id: Number,
-  iChannels: Array,
+const serverSchema = mongoose.Schema({
+  serverID: Number,
+  ignoredChannels: Array,
 });
 
-module.exports = mongoose.model("servers", postSchema);
+module.exports = mongoose.model("servers", serverSchema);
