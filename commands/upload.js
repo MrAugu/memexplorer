@@ -59,7 +59,10 @@ module.exports = {
         downVotes: 0,
         approvedBy: "NONE",
         state: "POST_UNAPPROVED",
-        votes: []
+        votes: [],
+        reports: 0,
+        type: "img",
+        videoUrl: "NONE",
       });
 
       await post.save().catch(e => console.log(e));

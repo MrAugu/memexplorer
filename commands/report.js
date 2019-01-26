@@ -53,8 +53,9 @@ module.exports = {
         .setFooter(`<#${meme.id}>  Meme posted by ${user.tag} ${time} ago`, user.displayAvatarURL)
         .setTimestamp();
       client.channels.get(reports).send(embed);
-
       msg.edit(`Successfully reported Meme \`<#${meme.id}>\`. (If the meme is not following our guidelines it will be deleted from the database, and the user might receive a punishment.)`)
+      
+      meme.reports++;
     });
   },
 };

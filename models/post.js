@@ -12,7 +12,10 @@ const postSchema = mongoose.Schema({
   state: String,
   votes: Array,
   rejectedBy: String,
-  deletedBy: String
+  deletedBy: String,
+  reports: Number,
+  type: String,
+  videoUrl: String,
 });
 
 module.exports = mongoose.model("posts", postSchema);

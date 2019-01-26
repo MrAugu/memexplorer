@@ -27,7 +27,7 @@ module.exports = {
             const msg = await message.channel.send(`${loading} Deleting post...`);
 
             const reason = args.slice(1).join(" ");
-            if (!reason) return msg.edit(replies.noReason);
+            if (!reason) return msg.edit(`Please provide a reason for deleting this post.`);
         
             posts.findOne({
                 id: args[0],
