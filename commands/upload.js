@@ -66,7 +66,7 @@ module.exports = {
       client.memes.push(message.author.id);
 
       const embed = new Discord.RichEmbed()
-        .setAuthor(`${message.author.username} - #${id}`, message.author.displayAvatarURL)
+        .setAuthor(`${message.author.username} - <#${id}>`, message.author.displayAvatarURL)
         .setDescription(`Successfully uploaded image to database!\n${loading} Waiting for approval from a moderator.`)
         .setFooter("This system is in place to make sure images posted follow our guidelines.")
         .setTimestamp()
@@ -76,7 +76,7 @@ module.exports = {
       const log = new Discord.RichEmbed()
         .setAuthor(`Posted by ${message.author.tag} (${message.author.id})`, message.author.displayAvatarURL)
         .setTitle(titlePost)
-        .setDescription(`ID \`#${id}\``)
+        .setDescription(`\`<#${id}>\``)
         .setImage(img)
         .setColor(invisible)
         .setFooter("Awaiting for approval.")

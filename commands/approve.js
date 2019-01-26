@@ -69,9 +69,9 @@ module.exports = {
           msg.edit(`Successfully approved post with id \`#${post.id}\``);
           const user = await client.fetchUser(post.authorID);
           db.add(`approvedMemes.${message.author.id}`, 1);
-          client.channels.get(logs).send(`${approved} **${message.author.tag}** (${message.author.id}) approved a post with id \`#${post.id}\` submitted by **${user.tag}** (${user.id}).`);
+          client.channels.get(logs).send(`${approved} **${message.author.tag}** (${message.author.id}) approved a post with id \`<#${post.id}>\` submitted by **${user.tag}** (${user.id}).`);
           try {
-            await user.send(`${approved} **${message.author.tag}** has approved your post with id \`#${post.id}\`. You can view your post by doing \`${prefix}meme ${post.id}\`.`);
+            await user.send(`${approved} **${message.author.tag}** has approved your post with id \`<#${post.id}>\`. You can view your post by doing \`${prefix}meme ${post.id}\`.`);
           } catch (e) {
             return;
           }

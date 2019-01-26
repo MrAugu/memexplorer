@@ -60,7 +60,7 @@ module.exports = {
               .setTitle(`**${title}**`)
               .setImage(meme.url)
               .setColor(invisible)
-              .setFooter(`#${meme.id}  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL);
+              .setFooter(`<#${meme.id}>  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL);
             msg.edit(embed);
 
             await msg.react(upvote);
@@ -113,7 +113,7 @@ module.exports = {
             .setTitle(`**${title}**`)
             .setImage(meme.url)
             .setColor(invisible)
-            .setFooter(`#${meme.id}  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL);
+            .setFooter(`<#${meme.id}>  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL);
           msg.edit(embed);   
         });
       }

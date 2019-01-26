@@ -48,12 +48,12 @@ module.exports = {
     
           post.save().catch(e => console.log(e));
     
-          msg.edit(`Successfully rejected post with id \`#${post.id}\``);
+          msg.edit(`Successfully rejected post with id \`<#${post.id}>\``);
           const user = await client.fetchUser(post.authorID);
           db.add(`rejectedMemes.${message.author.id}`, 1);
-          client.channels.get(logs).send(`${rejected} **${message.author.tag}** (${message.author.id}) rejected a post with id \`#${post.id}\` submitted by **${user.tag}** (${user.id}). Reason: ${reason}`);
+          client.channels.get(logs).send(`${rejected} **${message.author.tag}** (${message.author.id}) rejected a post with id \`<#${post.id}>\` submitted by **${user.tag}** (${user.id}). Reason: ${reason}`);
           try {
-            user.send(`${rejected} **${message.author.tag}** has rejected your post with id \`#${post.id}\`. Reason: ${reason}`);
+            user.send(`${rejected} **${message.author.tag}** has rejected your post with id \`<#${post.id}>\`. Reason: ${reason}`);
           } catch (e) {
             console.log(e);
           }

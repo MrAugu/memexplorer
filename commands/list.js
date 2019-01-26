@@ -68,7 +68,7 @@ module.exports = {
               .setTitle(post.title)
               .setImage(post.url)
               .setColor(invisible)
-              .setFooter(`#${post.id}  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL)
+              .setFooter(`<#${post.id}>  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL)
               .setTimestamp();
             return msg.edit(embed);
           });
