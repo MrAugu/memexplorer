@@ -71,6 +71,7 @@ module.exports = class {
             ignore: false
           });
           await newChannel.save().catch(e => console.log(e));
+          return;
         }
         if(c.ignore === null) c.ignore = false;
         if(!c.ignore){
@@ -93,6 +94,7 @@ module.exports = class {
                 developer: false
               });
               await newUser.save().catch(e => console.log(e));
+              return
             }
             if(!u.blacklisted){
               if (cmd && !message.guild && cmd.guildOnly) return message.channel.send("I can't execute that command inside DMs!. Please run this command in a server.");
