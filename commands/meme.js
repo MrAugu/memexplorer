@@ -46,11 +46,14 @@ module.exports = {
 
             const t = ms(Date.now() - meme.uploadedAt);
             const time = convertTime(t);
-
+            let title = meme.title;
+            if(title === undefined) title = `Meme #${meme.id}`
             const votes = meme.upVotes - meme.downVotes;
             const user = await client.fetchUser(meme.authorID);
+
             const embed = new Discord.RichEmbed()
               .setAuthor(`${votes} Vote(s)`)
+              .setTitle(`**${title}**`)
               .setImage(meme.url)
               .setColor(invisible)
               .setFooter(`#${meme.id}  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL)
@@ -60,31 +63,21 @@ module.exports = {
             await msg.react("⬆");
             await msg.react("⬇");
             const filter = (r) => r.emoji.name === "⬆" || r.emoji.name === "⬇";
-            const collector = msg.createReactionCollector(filter, { time: 10000 });
+            const collector = msg.createReactionCollector(filter, { time: 120000 });
             collector.on("collect", (r) => {
-              if (r.emoji.name === "⬆") {
-                meme.upVotes += 1;
-                res.wiiPoints += 1;
-              } else if (r.emoji.name === "⬇") {
-                meme.downVotes += 1;
+              if(r.users.last().id === user.id){
+                r.remove(user.id);
+              } else {
+                if (r.emoji.name === "⬆") {
+                  meme.upVotes += 1;
+                  res.wiiPoints += 1;
+                } else if (r.emoji.name === "⬇") {
+                  meme.downVotes += 1;
+                }
               }
             });
+
             collector.on("end", async c => { // eslint-disable-line no-unused-vars
-              /*for (const i of c) {
-                if (i[1].author.id !== client.user.id) {
-                  if (meme.votes.includes(i[1].author.id)) {
-                    if (i[0] === "⬆") {
-                      meme.upVotes += 1;
-                      res.wiiPoints += 1;
-                      meme.votes.push(i[1].author.id);
-                    } else if (i[0] === "⬇") {
-                      meme.downVotes += 1;
-                      meme.votes.push(i[1].author.id);
-                    }
-                  }
-                }
-              }*/
-              
               await meme.save().catch(e => console.log(e));
               await res.save().catch(e => console.log(e));
             });
@@ -103,11 +96,14 @@ module.exports = {
           
           const t = ms(Date.now() - meme.uploadedAt);
           const time = convertTime(t);
-
+          let title = meme.title;
+          if(title === undefined) title = `Meme #${meme.id}`
           const votes = meme.upVotes - meme.downVotes;
           const user = await client.fetchUser(meme.authorID);
+
           const embed = new Discord.RichEmbed()
             .setAuthor(`${votes} Vote(s)`)
+            .setTitle(`**${title}**`)
             .setImage(meme.url)
             .setColor(invisible)
             .setFooter(`#${meme.id}  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL)

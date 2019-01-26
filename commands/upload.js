@@ -17,7 +17,7 @@ mongoose.connect(mongoUrl, {
 module.exports = {
   name: "upload",
   description: "Uploads your meme to the database",
-  usage: "<image>",
+  usage: "<image> <title>",
   cooldown: "120",
   async execute (client, message, args) {
     
@@ -27,25 +27,31 @@ module.exports = {
 
     try {
       let img;
-      if (!args[0]) {
-        if (!message.attachments.first()) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`${prefix} upload <image>\``);
-        img = message.attachments.first().url;
-        if (!img) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`#${prefix} upload <image>\``);
-      
-      } else if (validUrl.isUri(args[0])) {
-        img = args[0];
+      let titlePost
+
+      if(!message.attachments.first()){
+        if(args[0] && validUrl.isUri(args[0])){
+          img = args[0];
+          if(args[1]) titlePost = args[1];
+        } else {
+          return msg.edit(`That was not a valid url ${message.author.mention}.\nCorrect Usage: \`${prefix} upload <image>\``);
+        }
       } else {
-        return msg.edit(`That was not a valid url ${message.author.mention}.\nCorrect Usage: \`${prefix} upload <image>\``);
+        img = message.attachments.first().url;
+        if(!img) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`#${prefix} upload <image>\``);
+        if(args[0]) titlePost = args[0];
       }
 
       if (!img) return msg.edit(replies.noImg);
+      if(titlePost.length > 150) return msg.edit("Title was too long, must be less than 150 characters.")
 
       const docCount = await prePost.countDocuments();
-
       const id = docCount + 1;
+      if(titlePost === null || titlePost === undefined) titlePost = "Meme #" + id;
 
       const post = new prePost({
         id: id,
+        title: titlePost, 
         authorID: message.author.id,
         uploadedAt: message.createdTimestamp,
         url: img,
@@ -60,7 +66,7 @@ module.exports = {
       client.memes.push(message.author.id);
 
       const embed = new Discord.RichEmbed()
-        .setAuthor(message.author.username, message.author.displayAvatarURL)
+        .setAuthor(`${message.author.username} - #${id}`, message.author.displayAvatarURL)
         .setDescription(`Successfully uploaded image to database!\n${loading} Waiting for approval from a moderator.`)
         .setFooter("This system is in place to make sure images posted follow our guidelines.")
         .setTimestamp()
@@ -69,6 +75,7 @@ module.exports = {
         
       const log = new Discord.RichEmbed()
         .setAuthor(`Posted by ${message.author.tag} (${message.author.id})`, message.author.displayAvatarURL)
+        .setTitle(titlePost)
         .setDescription(`ID \`#${id}\``)
         .setImage(img)
         .setColor(invisible)

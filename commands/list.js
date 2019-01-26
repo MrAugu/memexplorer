@@ -64,7 +64,8 @@ module.exports = {
             const time = convertTime(t);
     
             const embed = new Discord.RichEmbed()
-              .setTitle("Post awaiting approval")
+              .setAuthor("Post awaiting approval")
+              .setTitle(post.title)
               .setImage(post.url)
               .setColor(invisible)
               .setFooter(`#${post.id}  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL)
