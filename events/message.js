@@ -22,8 +22,8 @@ module.exports = class {
     if (message.content.startsWith("egg ")) return message.channel.send("The prefix has been changed to `wii`.");
     if (!message.channel.guild) return message.channel.send("I can't execute commands inside DMs! Please run this command in a server.");
 
-    const prefixMention = new RegExp(`^<@!?${this.client.user.id}> `);
-    const fPrefix = message.content.match(prefixMention) ? message.content.match(prefixMention)[0] : prefix;
+    const mPrefix = new RegExp(`^<@!?${this.client.user.id}> `);
+    const fPrefix = message.content.match(mPrefix) ? message.content.match(mPrefix)[0] : prefix;
     if (message.content.toLowerCase().indexOf(fPrefix) !== 0) return;
     const args = message.content.slice(fPrefix.length).trim().split(/ +/g);
 
