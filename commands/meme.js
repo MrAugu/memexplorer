@@ -51,8 +51,12 @@ module.exports = {
             const votes = meme.upVotes - meme.downVotes;
             const user = await client.fetchUser(meme.authorID);
 
+            let v;
+            if(votes == 1) v = "Vote"
+            else v = "Votes";
+
             const embed = new Discord.RichEmbed()
-              .setAuthor(`${votes} Vote(s)`)
+              .setAuthor(`${votes} ${v} (+${meme.upVotes} | -${meme.downVotes})`)
               .setTitle(`**${title}**`)
               .setImage(meme.url)
               .setColor(invisible)
@@ -101,8 +105,12 @@ module.exports = {
           const votes = meme.upVotes - meme.downVotes;
           const user = await client.fetchUser(meme.authorID);
 
+          let v;
+          if(votes == 1) v = "Vote"
+          else v = "Votes";
+
           const embed = new Discord.RichEmbed()
-            .setAuthor(`${votes} Vote(s)`)
+            .setAuthor(`${votes} ${v} (+${meme.upVotes} | -${meme.downVotes})`)
             .setTitle(`**${title}**`)
             .setImage(meme.url)
             .setColor(invisible)

@@ -20,8 +20,10 @@ Type \`${client.user.username} <command>\` to use a command.
 To get more info on a specific command do \`${client.user.username} help <command>\`
 
 **bio** - set your bio
+**ignore** - make the bot ignore commands from a specific channel
 **invite** - invite link for the bot
 **leaderboard** - displays the users with the most ${currency}
+**listen** - bot will continue responding commands from a specific channel
 **meme** - displays a meme
 **ping** - sends the bot's ping
 **popular** - displays the posts with the most upvotes
