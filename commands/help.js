@@ -26,7 +26,7 @@ To get more info on a specific command do \`${client.user.username} help <comman
 **listen** - bot will continue responding commands from a specific channel
 **meme** - displays a meme
 **ping** - sends the bot's ping
-**popular** - displays the posts with the most upvotes
+**popular** - displays the posts with the most likes
 **profile** - displays the user's profile
 **stats** - displays the bot's stats
 **upload** - upload a meme to the database

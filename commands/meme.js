@@ -56,26 +56,25 @@ module.exports = {
             else v = "Votes";
 
             const embed = new Discord.RichEmbed()
-              .setAuthor(`${votes} ${v} (+${meme.upVotes} | -${meme.downVotes})`)
+              .setAuthor(`${meme.upVotes} Likes / ${meme.downVotes} Dislikes`)
               .setTitle(`**${title}**`)
               .setImage(meme.url)
               .setColor(invisible)
-              .setFooter(`#${meme.id}  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL)
-              .setTimestamp();
+              .setFooter(`#${meme.id}  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL);
             msg.edit(embed);
 
-            await msg.react("⬆");
-            await msg.react("⬇");
-            const filter = (r) => r.emoji.name === "⬆" || r.emoji.name === "⬇";
+            await msg.react(upvote);
+            await msg.react(downvote);
+            const filter = (r) => r.emoji.name === upvote || r.emoji.name === downvote;
             const collector = msg.createReactionCollector(filter, { time: 120000 });
             collector.on("collect", (r) => {
               if(r.users.last().id === user.id){
                 r.remove(user.id);
               } else {
-                if (r.emoji.name === "⬆") {
+                if (r.emoji.name === upvote) {
                   meme.upVotes += 1;
                   res.wiiPoints += 1;
-                } else if (r.emoji.name === "⬇") {
+                } else if (r.emoji.name === downvote) {
                   meme.downVotes += 1;
                 }
               }
@@ -110,12 +109,11 @@ module.exports = {
           else v = "Votes";
 
           const embed = new Discord.RichEmbed()
-            .setAuthor(`${votes} ${v} (+${meme.upVotes} | -${meme.downVotes})`)
+            .setAuthor(`${meme.upVotes} Likes / ${meme.downVotes} Dislikes`)
             .setTitle(`**${title}**`)
             .setImage(meme.url)
             .setColor(invisible)
-            .setFooter(`#${meme.id}  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL)
-            .setTimestamp();
+            .setFooter(`#${meme.id}  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL);
           msg.edit(embed);   
         });
       }
