@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const profileSchema = mongoose.Schema({
   authorID: String,
-  wiiPoints: Number,
+  bytes: Number,
   bio: String,
   totalPosts: Number,
   blacklisted: Boolean,

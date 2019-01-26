@@ -10,19 +10,19 @@ module.exports = class {
   }
 
   async run (guild) {
-      let embed = new Discord.RichEmbed()
-      .setAuthor(`${this.client.user.username} | ${this.client.guilds.size} servers`, client.user.avatarURL)
-      .setColor(green)
-      .setThumbnail(guild.iconURL)
-      .setDescription(`${this.client.user.username} has been **added** to a server.`)
-      .addField("Guild", `${guild.name}`, true)
-      .addField("Guild ID", `${guild.id}`, true)
-      .addField("Users", `${guild.memberCount} users`, true)
-      .addField("Region", `${guild.region}`, true)
-      .addField("Owner", `${guild.owner} (${guild.ownerID})`)
-      .setFooter(`Created On - ${moment(guild.createdAt).format('LLLL')}`, guild.iconURL)
-      .setTimestamp();
-      this.client.channels.get(events).send(embed);
+      // let embed = new Discord.RichEmbed()
+      // .setAuthor(`${this.client.user.username} | ${this.client.guilds.size} servers`, client.user.avatarURL)
+      // .setColor(green)
+      // .setThumbnail(guild.iconURL)
+      // .setDescription(`${this.client.user.username} has been **added** to a server.`)
+      // .addField("Guild", `${guild.name}`, true)
+      // .addField("Guild ID", `${guild.id}`, true)
+      // .addField("Users", `${guild.memberCount} users`, true)
+      // .addField("Region", `${guild.region}`, true)
+      // .addField("Owner", `${guild.owner} (${guild.ownerID})`)
+      // .setFooter(`Created On - ${moment(guild.createdAt).format('LLLL')}`, guild.iconURL)
+      // .setTimestamp();
+      this.client.channels.get(events).send("I joined a server");
 
       db.add(`serversJoined.${this.client.user.id}`, 1);
     }

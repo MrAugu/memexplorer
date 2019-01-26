@@ -52,7 +52,7 @@ module.exports = {
             if (!res) {
               const newProfile = new profiles({
                 authorID: post.authorID,
-                wiiPoints: 0,
+                bytes: 0,
                 bio: "No bio set",
                 totalPosts: 1
               });

@@ -82,7 +82,7 @@ module.exports = class {
             if (!u) {
               const newUser = new profiles({
                 authorID: message.author.id,
-                wiiPoints: 0,
+                bytes: 0,
                 bio: "No bio set",
                 totalPosts: 0,
                 blacklisted: false,

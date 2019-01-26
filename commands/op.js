@@ -38,7 +38,7 @@ module.exports = {
       if (!u) {
         const newUser = new profiles({
           authorID: user.id,
-          wiiPoints: 0,
+          bytes: 0,
           bio: "No bio set",
           totalPosts: 0,
           blacklisted: false,
@@ -52,12 +52,12 @@ module.exports = {
         await newUser.save().catch(e => console.log(e));
       }
 
-      if(action === "set") u.wiiPoints = amount;
-      if(action === "give") u.wiiPoints += amount;
-      if(action === "take") u.wiiPoints -= amount;
+      if(action === "set") u.bytes = amount;
+      if(action === "give") u.bytes += amount;
+      if(action === "take") u.bytes -= amount;
       await u.save().catch(e => console.log(e));
 
-      return msg.edit(`**${user.user.tag}** now has ${u.wiiPoints} ${currency}.`)
+      return msg.edit(`**${user.user.tag}** now has ${u.bytes} ${currency}.`)
     });
   },
 };

@@ -29,7 +29,7 @@ module.exports = {
       if (!u) {
         const newUser = new profiles({
           authorID: user.id,
-          wiiPoints: 0,
+          bytes: 0,
           bio: "No bio set",
           totalPosts: 0,
           blacklisted: false,
@@ -54,7 +54,7 @@ module.exports = {
       const embed = new Discord.RichEmbed()
         .setThumbnail(user.user.displayAvatarURL)
         .addField("User", `${user.user.tag}${ranks}`, true)
-        .addField(currency, `${emoji.wiiP} ${u.wiiPoints}`, true)
+        .addField(currency, `${emoji.currencyEmoji} ${u.bytes}`, true)
         .addField("Bio", `${u.bio}`)
         .setFooter(`${u.totalPosts} posts`)
         .setColor(invisible)

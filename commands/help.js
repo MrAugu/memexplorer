@@ -4,7 +4,7 @@ const { typing } = require("../data/emojis.json")
 
 module.exports = {
   name: "help",
-  description: "Sends you a dm of detailed list of Wii's commands.",
+  description: "Sends you a dm of detailed list of Memexplorer's commands.",
   aliases: ["commands"],
   async execute (client, message, args) {
       
@@ -22,10 +22,11 @@ Type \`${prefix}<command>\` to use a command.
 To get more info on a specific command do \`${prefix}help <command>\`
 
 **bio** - set your bio
+**donate** - sends a link to donate
 **ignore** - make the bot ignore commands from a specific channel
 **invite** - invite link for the bot
 **leaderboard** - displays the users with the most ${currency}
-**listen** - bot will continue responding commands from a specific channel
+**listen** - bot will continue responding to commands from a specific channel
 **meme** - displays a meme
 **ping** - sends the bot's ping
 **popular** - displays the posts with the most likes
@@ -33,9 +34,12 @@ To get more info on a specific command do \`${prefix}help <command>\`
 **profile** - displays the user's profile
 **report** - report a post for not following the guidelines
 **stats** - displays the bot's stats
+**support** - sends you the support server
 **upload** - upload a meme to the database
 
-Need more help? Join the support server: ${server}`;
+Need more help? Join the support server: ${server}
+Website: https://memexplorer.com
+`;
 
       try{
           await user.send(helpStr);

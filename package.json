@@ -1,8 +1,8 @@
 {
-  "name": "Wii",
+  "name": "Memexplorer",
   "version": "0.0.1",
   "description": "Epic bot",
-  "main": "wii.js",
+  "main": "explorer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -28,7 +28,7 @@ module.exports = {
       if (!user) {
         const newUser = new profiles({
           authorID: message.author.id,
-          wiiPoints: 0,
+          bytes: 0,
           bio: args.join(" ")
         });
 

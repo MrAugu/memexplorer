@@ -1,2 +1,1 @@
-#Wii
 Meme bot

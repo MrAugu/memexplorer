@@ -36,7 +36,7 @@ module.exports = {
           }, async (er, res) => {
             if (er) console.log(er);
 
-            res.wiiPoints += 1;    
+            res.bytes += 1;    
 
             if (!meme) return msg.edit(replies.meme);
           
@@ -73,7 +73,7 @@ module.exports = {
               } else {
                 if (r.emoji.name === upvote) {
                   meme.upVotes += 1;
-                  res.wiiPoints += 1;
+                  res.bytes += 1;
                 } else if (r.emoji.name === downvote) {
                   meme.downVotes += 1;
                 }
