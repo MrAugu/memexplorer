@@ -20,7 +20,7 @@ module.exports = class {
       if (!message.channel.permissionsFor(message.guild.me).missing("SEND_MESSAGES")) return;
     }
 
-    if (message.content.startsWith("egg ")) return message.channel.send("The prefix has been changed to `wii`.");
+    if (message.content.startsWith("wii ")) return message.channel.send("The prefix has been changed to `e.`");
     if (!message.channel.guild) return message.channel.send("I can't execute commands inside DMs! Please run this command in a server.");
 
     let fPrefix;
@@ -37,6 +37,8 @@ module.exports = class {
         await newServer.save().catch(e => console.log(e));
         return;
       }
+
+      console.log(e);
 
       const mPrefix = new RegExp(`^<@!?${this.client.user.id}> `);
       fPrefix = message.content.match(mPrefix) ? message.content.match(mPrefix)[0] : s.prefix;
