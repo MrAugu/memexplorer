@@ -1,6 +1,7 @@
-const { prefix, mods } = require("../settings.json");
+const { pre, mods } = require("../settings.json");
 const profiles = require("../models/profiles.js");
 const channels = require("../models/channel.js");
+const servers = require("../models/server.js");
 const mongoose = require("mongoose");
 const mongoUrl = require("../tokens.json").mongodb;
 const fs = require("fs");
@@ -22,45 +23,60 @@ module.exports = class {
     if (message.content.startsWith("egg ")) return message.channel.send("The prefix has been changed to `wii`.");
     if (!message.channel.guild) return message.channel.send("I can't execute commands inside DMs! Please run this command in a server.");
 
-    const mPrefix = new RegExp(`^<@!?${this.client.user.id}> `);
-    const fPrefix = message.content.match(mPrefix) ? message.content.match(mPrefix)[0] : prefix;
-    if (message.content.toLowerCase().indexOf(fPrefix) !== 0) return;
-    const args = message.content.slice(fPrefix.length).trim().split(/ +/g);
-
-    const command = args.shift().toLowerCase();
-    const cmd = this.client.commands.get(command) || this.client.commands.find(c => c.aliases && c.aliases.includes(command));
-    if (!cmd) {
-      if (fs.existsSync(`./commands/${command}.js`)) {
-        try {
-          const commandFile = require(`./commands/${command}.js`);
-          if (commandFile) commandFile.run(this.client, message, args);
-        } catch (error) {
-          console.error(error);
-          message.reply("There was an error trying to execute that command!");
-        }
-      }
-      return;
-    }
-
-    db.add(`botMessages.${this.client.user.id}`, 1);
-    db.add(`${cmd.name}.${this.client.user.id}`, 1);
-    
-    channels.findOne({
-      channelID: message.channel.id
-    }, async (err, c) => {
+    let fPrefix;
+    servers.findOne({
+      serverID: message.guild.id
+    }, async (err, s) => {
       if (err) console.log(err);
-      if (!c) {
-        const newChannel = new channels({
-          channelID: message.channel.id,
-          ignore: false
+
+      if(!s){
+        const newServer = new servers({
+          serverID: message.guild.id,
+          prefix: pre,
         });
-        await newChannel.save().catch(e => console.log(e));
+        await newServer.save().catch(e => console.log(e));
+        return;
       }
-      if(c.ignore === null) c.ignore = false;
-      if(!c.ignore){
-        profiles.findOne({
-          authorID: message.author.id
-        }, async (err, u) => {
+
+      const mPrefix = new RegExp(`^<@!?${this.client.user.id}> `);
+      fPrefix = message.content.match(mPrefix) ? message.content.match(mPrefix)[0] : s.prefix;
+      if (message.content.toLowerCase().indexOf(fPrefix) !== 0) return;
+      const args = message.content.slice(fPrefix.length).trim().split(/ +/g);
+
+      const command = args.shift().toLowerCase();
+      const cmd = this.client.commands.get(command) || this.client.commands.find(c => c.aliases && c.aliases.includes(command));
+      if (!cmd) {
+        if (fs.existsSync(`./commands/${command}.js`)) {
+          try {
+            const commandFile = require(`./commands/${command}.js`);
+            if (commandFile) commandFile.run(this.client, message, args);
+          } catch (error) {
+            console.error(error);
+            message.reply("There was an error trying to execute that command!");
+          }
+        }
+        return;
+      }
+
+      db.add(`botMessages.${this.client.user.id}`, 1);
+      db.add(`${cmd.name}.${this.client.user.id}`, 1);
+      
+      channels.findOne({
+        channelID: message.channel.id
+      }, async (err, c) => {
+        if (err) console.log(err);
+        if (!c) {
+          const newChannel = new channels({
+            channelID: message.channel.id,
+            ignore: false
+          });
+          await newChannel.save().catch(e => console.log(e));
+        }
+        if(c.ignore === null) c.ignore = false;
+        if(!c.ignore){
+          profiles.findOne({
+            authorID: message.author.id
+          }, async (err, u) => {
             if (err) console.log(err);
             if (!u) {
               const newUser = new profiles({
@@ -113,8 +129,9 @@ module.exports = class {
                 message.reply("There was an error trying to execute that command!");
               }
             }
-        });     
-        } 
+          });     
+        }
+      });
     });
   }
 };

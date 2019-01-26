@@ -14,9 +14,18 @@ module.exports = {
   name: "prefix",
   description: "Set the prefix for the server",
   usage: "<prefix>",
-  args: true,
   aliases: ['setprefix'],
   async execute (client, message, args) {
+    if(!args[0]) {
+        servers.findOne({
+            serverID: message.guild.id
+        }, async (err, s) => {
+            if (err) console.log(err);
+            return message.channel.send(`The current prefix is ${s.prefix}`);
+        });
+    }
+    if(!args[0]) return;
+
     if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(replies.noPerms);
 
     let f = args[0].replace("_", " ");
