@@ -34,11 +34,11 @@ module.exports = {
           img = args[0];
           if(args[1]) titlePost = args.slice(1).join(" ");
         } else {
-          return msg.edit(`That was not a valid url ${message.author.mention}.\nCorrect Usage: \`${prefix} upload <image>\``);
+          return msg.edit(`That was not a valid url ${message.author.mention}.\nCorrect Usage: \`${prefix}upload <image>\``);
         }
       } else {
         img = message.attachments.first().url;
-        if(!img) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`#${prefix} upload <image>\``);
+        if(!img) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`#${prefix}upload <image>\``);
         if(args[0]) titlePost = args.join(" ");
       }
 
