@@ -47,7 +47,7 @@ module.exports = {
             const t = ms(Date.now() - meme.uploadedAt);
             const time = convertTime(t);
             let title = meme.title;
-            if(title === undefined) title = `Meme #${meme.id}`
+            if(title === undefined) title = `Untitled`
             const votes = meme.upVotes - meme.downVotes;
             const user = await client.fetchUser(meme.authorID);
 
@@ -100,7 +100,7 @@ module.exports = {
           const t = ms(Date.now() - meme.uploadedAt);
           const time = convertTime(t);
           let title = meme.title;
-          if(title === undefined) title = `Meme #${meme.id}`
+          if(title === undefined) title = `Untitled`
           const votes = meme.upVotes - meme.downVotes;
           const user = await client.fetchUser(meme.authorID);
 

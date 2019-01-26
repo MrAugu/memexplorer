@@ -47,7 +47,7 @@ module.exports = {
 
       const docCount = await prePost.countDocuments();
       const id = docCount + 1;
-      if(titlePost === null || titlePost === undefined) titlePost = "Meme #" + id;
+      if(titlePost === null || titlePost === undefined) titlePost = "Untitled";
 
       const post = new prePost({
         id: id,
