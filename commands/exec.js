@@ -1,6 +1,6 @@
 const util = require("util"); // eslint-disable-line no-unused-vars
 const exec = require("child_process").exec;
-const { owner } = require("../settings.json");
+const { devs } = require("../settings.json");
 
 module.exports = {
   name: "exec",
@@ -8,7 +8,7 @@ module.exports = {
   args: true,
   usage: "<code>",
   async execute (client, message, args) {
-    if (!owner.includes(message.author.id)) return message.channel.send("Only the devs can use the `exec` command.");
+    if (!devs.includes(message.author.id)) return message.channel.send("Only the devs can use the `exec` command.");
     
     try {
       let dir = null;
