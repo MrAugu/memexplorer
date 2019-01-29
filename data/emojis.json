@@ -12,5 +12,7 @@
     "developer": "<:dev:537828633461522442>",
     "approved": "<:approved:533753310604427265>",
     "rejected": "<:rejected:533753310428266517>",
-    "currencyEmoji": "<:memexplorer:538837036497371147>"
+    "currencyEmoji": "<:memexplorer:538837036497371147>",
+    "approve" : "✅",
+    "deny" : "❌"
 }
