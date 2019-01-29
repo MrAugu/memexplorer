@@ -65,24 +65,24 @@ module.exports = {
 
             await msg.react(upvote);
             await msg.react(downvote);
-            const filter = (r) => r.emoji.name === upvote || r.emoji.name === downvote;
-            const collector = msg.createReactionCollector(filter, { time: 120000 });
-            collector.on("collect", (r) => {
-              if(r.users.last().id === user.id){
-                r.remove(user.id);
-              } else {
-                if (r.emoji.name === upvote) {
+           
+            const collector = msg.createReactionCollector((reaction, user) => user !== client.user);
+            collector.on('collect', async (messageReaction) => {
+            //  if(r.users.last().id === user.id){
+            //r.remove(user.id);
+                const chosen = messageReaction.emoji.name;
+                if(chosen === upvote){
                   meme.upVotes += 1;
                   res.bytes += 1;
-                } else if (r.emoji.name === downvote) {
+                }
+                if(chosen === downvote){
                   meme.downVotes += 1;
                 }
-              }
-            });
+            
 
-            collector.on("end", async c => { // eslint-disable-line no-unused-vars
-              await meme.save().catch(e => console.log(e));
-              await res.save().catch(e => console.log(e));
+                meme.save().catch(e => console.log(e));
+                res.save().catch(e => console.log(e));
+                collector.stop(); //collect only 1 reaction to avoid abuse
             });
           });        
         });
