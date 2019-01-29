@@ -68,8 +68,8 @@ module.exports = {
            
             const collector = msg.createReactionCollector((reaction, user) => user !== client.user);
             collector.on('collect', async (messageReaction) => {
-              if(r.users.last().id === user.id){
-                r.remove(user.id);
+            //  if(r.users.last().id === user.id){
+            //r.remove(user.id);
                 const chosen = messageReaction.emoji.name;
                 if(chosen === upvote){
                   meme.upVotes += 1;
