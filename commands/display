@@ -1,0 +1,192 @@
+const Discord = require("discord.js");
+const { loading , approve ,deny,approved,downloading,rejected} = require("../data/emojis.json");
+const ms = require("parse-ms"); // eslint-disable-line no-unused-vars
+const { invisible } = require("../data/colors.json");
+const replies = require("../data/replies.json");
+const posts = require("../models/post.js");
+const { logs } = require("../data/channels.json");
+const { mods, prefix } = require("../settings.json");
+const profiles = require("../models/profiles.js");
+const prePosts = require("../models/post.js");
+const mongoose = require("mongoose");
+//const db = require("quick.db"); //enable this cuz i dont have quick.db
+const mongoUrl = require("../tokens.json").mongodb;
+mongoose.connect(mongoUrl, {
+    useNewUrlParser: true
+});
+
+module.exports = {
+    name: "display",
+    description: "Displays a post for mods to approve",
+    cooldown: "5",
+    usage: "<id of post>",
+    aliases: ["disp"],
+    async execute (client, message, args) {
+        const msg = await message.channel.send(`${loading} Fetching unapproved posts...`);
+        try {
+            if (!args[0]) {
+                prePosts.find({ state: "POST_UNAPPROVED" }).sort([
+                    ["id", "ascending"]
+                ]).exec(async (err, res) => {
+                    if (err) console.log(err);
+                    const unapprovedIDs = [];
+                    for (const i of res) {
+                        unapprovedIDs.push(`${i.id}`);
+                    }
+                    const num = await prePosts.countDocuments({ state: "POST_UNAPPROVED"});
+                    if (num < 1) return msg.edit(":white_check_mark: **No posts pending approval.**");
+                    msg.edit(`
+**Unnaproved Posts** (${num.toLocaleString()} posts awaiting approval)
+\`\`\`${unapprovedIDs.join(", ")}\`\`\`
+`);
+                });
+                /////////////////////////////////////////////////////////////////////////////////
+            } else if (args[0]) {
+                const memeIndex = args[0];
+                posts.findOne({
+                    id: memeIndex,
+                    state: "POST_UNAPPROVED"
+                }, async (err, meme) => {
+                    if (err) console.log(err);
+                    if (!meme) return msg.edit(replies.noMeme);
+                    const t = ms(Date.now() - meme.uploadedAt);
+                    const time = convertTime(t);
+                    let title = meme.title;
+                    if(title === undefined) title = `Untitled`
+                    const user = await client.fetchUser(meme.authorID);
+                    const embed = new Discord.RichEmbed()
+                        .setAuthor("Post awaiting approval")
+                        .setTitle(meme.title)
+                        .setImage(meme.url)
+                        .setColor(invisible)
+                        .setFooter(`<#${meme.id}>  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL)
+                        .setTimestamp();
+                    msg.edit(embed);
+
+                    await msg.react(approve);
+                    await msg.react(deny);
+
+                    const collector = msg.createReactionCollector((reaction, user) => user !== client.user);
+                    collector.on('collect', async (messageReaction) => {
+                        const chosen = messageReaction.emoji.name;
+                        if(chosen === approve){
+                            profiles.findOne({
+                                authorID: message.author.id
+                            }, async (err, u) => {
+                                if (err) console.log(err);
+                                if(!u.mod) {
+                                    return message.channel.send(replies.noPerms);
+                                } else {
+                                    const msg = await message.channel.send(`${loading} Approving post...`);
+
+                                    meme.state = "POST_APPROVED";
+                                    meme.approvedBy = message.author.id;
+
+                                    await meme.save().catch(e => console.log(e));
+
+                                    client.memes.shift();
+
+                                    profiles.findOne({
+                                        authorID: meme.authorID
+                                    }, async (err, res) => {
+                                        if (err) console.log(err);
+                                        if (!res) {
+                                            const newProfile = new profiles({
+                                                authorID: post.authorID,
+                                                bytes: 0,
+                                                bio: "No bio",
+                                                totalPosts: 1
+                                            });
+                                            await newProfile.save().catch(e => console.log(e));
+                                        }
+                                        if (res) {
+                                            res.totalPosts = res.totalPosts + 1;
+                                            await res.save().catch(e => console.log(e));
+                                        }
+                                    });
+
+                                    msg.edit(`Successfully approved post with id \`#${meme.id}\``);
+                                    const user = await client.fetchUser(meme.authorID);
+                                   // db.add(`approvedMemes.${message.author.id}`, 1);//enable this i dont have quick.db
+                                    client.channels.get(logs).send(`${approved} **${message.author.tag}** (${message.author.id}) approved a post with id \`<#${meme.id}>\` submitted by **${user.tag}** (${user.id}).`);
+                                    try {
+                                        await user.send(`${approved} **${message.author.tag}** has approved your post with id \`<#${meme.id}>\`. You can view your post by doing \`${prefix}meme ${meme.id}\`.`);
+                                    } catch (e) {
+                                        return;
+                                    }
+                                }});
+
+                        }
+
+
+                        //deny
+                        if(chosen === deny){
+                            const reason = "Unknown" ; //this line can be removed if the reason collector is made by someone else not me ofc i am dumb
+                            profiles.findOne({
+                                authorID: message.author.id
+                            }, async (err, u) => {
+                                if (err) console.log(err);
+                                if(!u.mod) {
+                                    return message.channel.send(replies.noPerms);
+                                } else {
+                                    //    message.channel.send("provide reason");
+                                    //    const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id);
+                                    //    collector.on('collect', message => {
+                                    //    reason ==   message.content ; // this line is wrong lol
+                                    //    collector.stop();
+                                    // I dont know how to make the collector wait user input and how to make reason = message.content
+                                    //    })
+                                    const msg = await message.channel.send(`${downloading} Rejecting post...`);
+                                    if (!reason) return msg.edit(replies.noReason);
+                                    meme.state = "POST_REJECTED";
+                                    meme.rejectedBy = message.author.id;
+                                    client.memes.shift();
+                                    meme.save().catch(e => console.log(e));
+                                    msg.edit(`Successfully rejected post with id \`<#${meme.id}>\``);
+                                    const user = await client.fetchUser(meme.authorID);
+                                  //  db.add(`rejectedMemes.${message.author.id}`, 1);//enable this too
+                                    client.channels.get(logs).send(`${rejected} **${message.author.tag}** (${message.author.id}) rejected a post with id \`<#${meme.id}>\` submitted by **${user.tag}** (${user.id}). Reason: ${reason}`);
+                                    try {
+                                        user.send(`${rejected} **${message.author.tag}** has rejected your post with id \`<#${meme.id}>\`. Reason: ${reason}`);
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
+
+                                }
+                            });}
+                        collector.stop();
+                    });
+                });
+            }
+
+        } catch (error) {
+            console.log(error);
+            msg.edit(`${replies.error}\n\`\`\`${error}\`\`\``);
+        }
+    },
+};
+
+function convertTime (time) {
+    let timeInt;
+    let timeString;
+    if (time.days == 0) {
+        if (time.hours == 0) {
+            if (time.minutes == 0) {
+                timeInt = time.seconds;
+                timeString = " second(s)";
+            } else {
+                timeInt = time.minutes;
+                timeString = " minute(s)";
+            }
+        } else {
+            timeInt = time.hours;
+            timeString = " hour(s)";
+        }
+    } else {
+        timeInt = time.days;
+        timeString = " day(s)";
+    }
+
+    const timeVar = timeInt + timeString;
+    return timeVar;
+}
