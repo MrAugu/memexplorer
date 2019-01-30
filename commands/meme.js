@@ -65,6 +65,15 @@ module.exports = {
 
             await msg.react(upvote);
             await msg.react(downvote);
+<<<<<<< HEAD
+           
+            const collector = msg.createReactionCollector((reaction, user) => user !== client.user);
+            collector.on('collect', async (messageReaction) => {
+            //  if(r.users.last().id === user.id){
+            //r.remove(user.id);
+                const chosen = messageReaction.emoji.name;
+                if(chosen === upvote){
+=======
             const filter = (r) => r.emoji.name === upvote || r.emoji.name === downvote;
             const collector = msg.createReactionCollector(filter, { time: 120000 });
             collector.on("collect", (r) => {
@@ -72,6 +81,7 @@ module.exports = {
                 r.remove(user.id);
               } else {
                 if (r.emoji.name === upvote) {
+>>>>>>> parent of 98e317c... downvote fix 2
                   meme.upVotes += 1;
                   res.bytes += 1;
                 } else if (r.emoji.name === downvote) {
