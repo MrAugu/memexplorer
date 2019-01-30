@@ -9,7 +9,7 @@ const { mods, prefix } = require("../settings.json");
 const profiles = require("../models/profiles.js");
 const prePosts = require("../models/post.js");
 const mongoose = require("mongoose");
-const db = require("quick.db");
+//const db = require("quick.db"); //enable this cuz i dont have quick.db
 const mongoUrl = require("../tokens.json").mongodb;
 mongoose.connect(mongoUrl, {
     useNewUrlParser: true
@@ -107,7 +107,7 @@ module.exports = {
 
                                     msg.edit(`Successfully approved post with id \`#${meme.id}\``);
                                     const user = await client.fetchUser(meme.authorID);
-                                    db.add(`approvedMemes.${message.author.id}`, 1);
+                                   // db.add(`approvedMemes.${message.author.id}`, 1);//enable this i dont have quick.db
                                     client.channels.get(logs).send(`${approved} **${message.author.tag}** (${message.author.id}) approved a post with id \`<#${meme.id}>\` submitted by **${user.tag}** (${user.id}).`);
                                     try {
                                         await user.send(`${approved} **${message.author.tag}** has approved your post with id \`<#${meme.id}>\`. You can view your post by doing \`${prefix}meme ${meme.id}\`.`);
@@ -144,7 +144,7 @@ module.exports = {
                                     meme.save().catch(e => console.log(e));
                                     msg.edit(`Successfully rejected post with id \`<#${meme.id}>\``);
                                     const user = await client.fetchUser(meme.authorID);
-                                    db.add(`rejectedMemes.${message.author.id}`, 1);
+                                  //  db.add(`rejectedMemes.${message.author.id}`, 1);//enable this too
                                     client.channels.get(logs).send(`${rejected} **${message.author.tag}** (${message.author.id}) rejected a post with id \`<#${meme.id}>\` submitted by **${user.tag}** (${user.id}). Reason: ${reason}`);
                                     try {
                                         user.send(`${rejected} **${message.author.tag}** has rejected your post with id \`<#${meme.id}>\`. Reason: ${reason}`);
