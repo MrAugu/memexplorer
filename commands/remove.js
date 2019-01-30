@@ -1,7 +1,7 @@
 const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
 const { loading } = require("../data/emojis.json");
 const { logs } = require("../data/channels.json");
-const { owner, currency } = require("../settings.json");
+const { owner } = require("../settings.json");
 const profiles = require("../models/profiles.js");
 const replies = require("../data/replies.json");
 const mongoose = require("mongoose");

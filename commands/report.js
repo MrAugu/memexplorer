@@ -1,6 +1,6 @@
 const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
 const ms = require("parse-ms");
-const { typing, whitelist } = require("../data/emojis.json");
+const { typing } = require("../data/emojis.json");
 const { reports } = require("../data/channels.json");
 const { red } = require("../data/colors.json");
 const { prefix } = require("../settings.json");

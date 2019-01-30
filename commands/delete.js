@@ -1,5 +1,4 @@
 const { loading } = require("../data/emojis.json");
-const { mods } = require("../settings.json");
 const { logs } = require("../data/channels.json");
 const replies = require("../data/replies.json");
 const posts = require("../models/post.js");
@@ -41,7 +40,7 @@ module.exports = {
                 await post.save().catch(e => console.log(e));
                 const user = await client.fetchUser(post.authorID);
                 msg.edit(`Deleted post \`<#${post.id}>\` from database.`);
-                client.channels.get(logs).send(`🗑 **${message.author.tag}** (${message.author.id}) deleted a post with id \`<#${post.id}>\` submitted by **${user.tag}** (${post.authorID}). Reason: ${reason}`);
+                client.channels.get(logs).send(`🗑 **${message.author.tag}** (${message.author.id}) deleted a post with id \`#${post.id}\` submitted by **${user.tag}** (${post.authorID}). Reason: ${reason}`);
                 try {
                 await user.send(`🗑 Your post with \`<#${post.id}>\` has been deleted by \`${message.author.tag}\`. Reason: ${reason}`);
                 } catch (e) {

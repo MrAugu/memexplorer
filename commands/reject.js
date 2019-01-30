@@ -1,7 +1,6 @@
 const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
 const { downloading, rejected } = require("../data/emojis.json");
 const { logs } = require("../data/channels.json");
-const { mods } = require("../settings.json");
 const replies = require("../data/replies.json");
 const prePosts = require("../models/post.js");
 const profiles = require("../models/profiles.js");
@@ -53,7 +52,7 @@ module.exports = {
           db.add(`rejectedMemes.${message.author.id}`, 1);
           client.channels.get(logs).send(`${rejected} **${message.author.tag}** (${message.author.id}) rejected a post with id \`<#${post.id}>\` submitted by **${user.tag}** (${user.id}). Reason: ${reason}`);
           try {
-            user.send(`${rejected} **${message.author.tag}** has rejected your post with id \`<#${post.id}>\`. Reason: ${reason}`);
+            user.send(`${rejected} **${message.author.tag}** has rejected your post with id \`#${post.id}\`. Reason: ${reason}`);
           } catch (e) {
             console.log(e);
           }
