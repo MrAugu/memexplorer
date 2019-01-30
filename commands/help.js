@@ -29,6 +29,7 @@ To get more info on a specific command do \`${prefix}help <command>\`
 **listen** - bot will continue responding to commands from a specific channel
 **meme** - displays a meme
 **ping** - sends the bot's ping
+**play** - play an mp3 file
 **popular** - displays the posts with the most likes
 **prefix** - sets/shows the current prefix of the server
 **profile** - displays the user's profile
