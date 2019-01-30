@@ -43,7 +43,6 @@ module.exports = {
       }
 
       if (!img) return msg.edit(replies.noImg);
-      if(titlePost !== null && titlePost.length > 150) return msg.edit("Title was too long, must be less than 150 characters.")
 
       const docCount = await prePost.countDocuments();
       const id = docCount + 1;

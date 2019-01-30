@@ -1,12 +1,11 @@
 const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
 const { loading } = require("../data/emojis.json");
 const { logs } = require("../data/channels.json");
-const { owner, currency, devs } = require("../settings.json");
+const { owner } = require("../settings.json");
 const profiles = require("../models/profiles.js");
 const replies = require("../data/replies.json");
 const mongoose = require("mongoose");
 const mongoUrl = require("../tokens.json").mongodb;
-const db = require("quick.db");
 
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true
@@ -18,7 +17,7 @@ module.exports = {
   usage: "<user> <group(supporter, mod)>",
   args: true,
   async execute (client, message, args) {
-    if (!devs.includes(message.author.id)) return message.channel.send(replies.noPerms);
+    if (!owner.includes(message.author.id)) return message.channel.send(replies.noPerms);
     if(!args[0]) return message.channel.send("Please specifiy a user.")
     if(!args[1]) return message.channel.send("Please specify a group to add the user to.");
     if(args[1].toLowerCase() !== "supporter" && args[1].toLowerCase() !== "mod" && args[1].toLowerCase() !== "developer" && args[1].toLowerCase() !== "voter") return message.channel.send("That's not a valid group. Valid groups: supporoter, mod, voter, developer.")

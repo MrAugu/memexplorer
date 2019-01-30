@@ -3,7 +3,7 @@ const { loading } = require("../data/emojis.json");
 const { invisible } = require("../data/colors.json");
 const { inspect } = require("util");
 const { post } = require("snekfetch");
-const { devs } = require("../settings.json");
+const { owner } = require("../settings.json");
 
 module.exports = {
   name: "eval",
@@ -11,7 +11,7 @@ module.exports = {
   usage: "<code>",
   args: true,
   async execute (client, message, args) {
-    if (!devs.includes(message.author.id)) return message.channel.send("Only the devs can use the `eval` command.");
+    if (!owner.includes(message.author.id)) return message.channel.send("Only the devs can use the `eval` command.");
     const msg = await message.channel.send(`${loading} Executing code...`);
 
     const code = args.join(" ");

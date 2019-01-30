@@ -25,7 +25,7 @@ module.exports = {
       authorID: user.id
     }, async (err, u) => {
       if (err) console.log(err);
-
+      let ranks = "";
       if (!u) {
         const newUser = new profiles({
           authorID: user.id,
@@ -40,18 +40,23 @@ module.exports = {
           mod: false,
           developer: false,
         });
-        await newUser.save().catch(e => console.log(e));
-      }
-
-      let ranks = "";
-      if(u.blacklisted) ranks += " " + emoji.blacklist;
-      else {
+        newUser.save().catch(e => console.log(e));
+        const embed = new Discord.RichEmbed()
+        .setThumbnail(user.user.displayAvatarURL)
+        .addField("User", `${user.user.tag}`, true)
+        .addField(currency, `${emoji.currencyEmoji} 0`, true)
+        .addField("Bio", `No bio set`)
+        .setFooter(`0 posts`)
+        .setColor(invisible)
+        .setTimestamp();
+        return msg.edit(embed);
+      } else {
         if(u.voted) ranks += " " + emoji.voted;
         if(u.supporter) ranks += " " + emoji.supporter;
         if(u.mod) ranks += " " + emoji.mod;
         if(u.developer) ranks += " " + emoji.developer;
-      }
-      const embed = new Discord.RichEmbed()
+
+        const embed = new Discord.RichEmbed()
         .setThumbnail(user.user.displayAvatarURL)
         .addField("User", `${user.user.tag}${ranks}`, true)
         .addField(currency, `${emoji.currencyEmoji} ${u.bytes}`, true)
@@ -60,6 +65,7 @@ module.exports = {
         .setColor(invisible)
         .setTimestamp();
       return msg.edit(embed);
+      }
     });
   },
 };

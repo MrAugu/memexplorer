@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
-const { invisible } = require("../data/colors.json");
 const { loading } = require("../data/emojis.json");
-const { currency, owner, devs } = require("../settings.json");
+const { currency, owner } = require("../settings.json");
 const replies = require("../data/replies.json");
 const profiles = require("../models/profiles.js");
 const mongoose = require("mongoose");
@@ -17,7 +16,7 @@ module.exports = {
   usage: "<user> <set/take/give> <amount>",
   args: true,
   async execute (client, message, args) {
-    if (!devs.includes(message.author.id)) return message.channel.send(replies.noPerms);
+    if (!owner.includes(message.author.id)) return message.channel.send(replies.noPerms);
     const msg = await message.channel.send(`${loading} Editing profile...`);
 
     if((args[1].toLowerCase() !== "set" && args[1].toLowerCase() !== "take" && args[1].toLowerCase() !== "give") || !args[1]) return msg.edit("Please privde an action. Actions: set, take, give.")
