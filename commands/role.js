@@ -8,7 +8,7 @@ module.exports = {
     name: 'role',
 	async execute(client, message, args){
         try{
-            if(message.guild.id === "529415233899593732" || message.guild.id === "533778546288754689" || message.guild.id === "473426453204172811"){
+            if(message.guild.id === "529415233899593732" || message.guild.id === "533778546288754689" || message.guild.id === "473426453204172811" || message.guild.id === "538358426326138905" || message.guild.id === "536619560783314954"){
                 dbl.hasVoted(message.author.id).then(voted => {
                     if (voted){
                         let member = message.member;
@@ -28,6 +28,8 @@ module.exports = {
                         return message.channel.send(embed);	
                     }
                 });
+            } else {
+                return message.channel.send("This guild doesn't have vote roles setup! Please ask `Tetra#0001` if you are interested in setting them up.")
             }
         } catch(e){
             console.log(e);
