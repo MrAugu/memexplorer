@@ -76,6 +76,7 @@ module.exports = {
               if(r.users.last().id === user.id){
                 r.remove(user.id);
               } else {
+                if(r.users.last().id === client.user.id) return;
                 if (r.emoji.name === upvote) {
                   meme.upVotes += 1;
                   res.bytes += 1;

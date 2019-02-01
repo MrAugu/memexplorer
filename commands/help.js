@@ -22,6 +22,7 @@ Type \`${prefix}<command>\` to use a command.
 To get more info on a specific command do \`${prefix}help <command>\`
 
 **bio** - set your bio
+**daily** - earn a random number of Bytes every 24 hours.
 **donate** - sends a link to donate
 **ignore** - make the bot ignore commands from a specific channel
 **invite** - invite link for the bot
