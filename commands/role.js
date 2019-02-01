@@ -28,6 +28,26 @@ module.exports = {
                         return message.channel.send(embed);	
                     }
                 });
+            } else if(message.guild.id === "529418106309705738"){
+                dbl.hasVoted(message.author.id).then(voted => {
+                    if (voted){
+                        let member = message.member;
+                        let role = message.guild.roles.find(`name`, `Admin`);
+                        if(!role) return message.channel.send("Role not found.");
+                      
+                        if(member.roles.has(role.id)) return message.channel.send("You already have the role!");
+                        member.addRole(role.id);
+    
+                        return message.channel.send("Successfully gave you the `I voted` role!");
+                    } else {
+                        const embed = new Discord.RichEmbed()
+                        .setDescription("You must vote for the bot to use this command: https://discordbots.org/bot/530766901282996224/vote")
+                        .setFooter("If you already voted give it 1 minute to process", message.author.displayAvatarURL)
+                        .setTimestamp()
+                        .setColor(invisible);
+                        return message.channel.send(embed);	
+                    }
+                });
             } else {
                 return message.channel.send("This guild doesn't have vote roles setup! Please ask `Tetra#0001` if you are interested in setting them up.")
             }
