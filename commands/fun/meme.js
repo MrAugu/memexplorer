@@ -72,7 +72,7 @@ module.exports = {
             await msg.react(upvote);
             await msg.react(downvote);
             const filter = (r) => r.emoji.name === upvote || r.emoji.name === downvote;
-            const collector = msg.createReactionCollector(filter, { time: 5000 });
+            const collector = msg.createReactionCollector(filter, { time: 120000 });
             collector.on("collect", (r) => {
               if(r.users.last().id === user.id){
                 r.remove(user.id);
