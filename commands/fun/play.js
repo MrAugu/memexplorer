@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const validUrl = require("valid-url");
-const mongoUrl = require("../tokens.json").mongodb;
-const { loading } = require("../data/emojis.json");
+const mongoUrl = require("../../tokens.json").mongodb;
+const { loading } = require("../../data/emojis.json");
 const Discord = require("discord.js");
 
 mongoose.connect(mongoUrl, {

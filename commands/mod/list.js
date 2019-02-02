@@ -1,12 +1,12 @@
 const Discord = require("discord.js");
 const ms = require("parse-ms"); // eslint-disable-line no-unused-vars
-const { loading } = require("../data/emojis.json");
-const { invisible } = require("../data/colors.json");
-const profiles = require("../models/profiles.js");
-const replies = require("../data/replies.json");
-const prePosts = require("../models/post.js");
+const { loading } = require("../../data/emojis.json");
+const { invisible } = require("../../data/colors.json");
+const profiles = require("../../models/profiles.js");
+const replies = require("../../data/replies.json");
+const prePosts = require("../../models/post.js");
 const mongoose = require("mongoose");
-const mongoUrl = require("../tokens.json").mongodb;
+const mongoUrl = require("../../tokens.json").mongodb;
 
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true

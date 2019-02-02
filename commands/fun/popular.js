@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const mongoUrl = require("../tokens.json").mongodb;
-const posts = require("../models/post.js");
-const { invisible } = require("../data/colors.json");
-const { loading } = require("../data/emojis.json");
+const mongoUrl = require("../../tokens.json").mongodb;
+const posts = require("../../models/post.js");
+const { invisible } = require("../../data/colors.json");
+const { loading } = require("../../data/emojis.json");
 const Discord = require("discord.js");
 
 mongoose.connect(mongoUrl, {

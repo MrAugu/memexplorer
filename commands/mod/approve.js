@@ -1,10 +1,10 @@
-const { loading, approved } = require("../data/emojis.json");
-const { logs } = require("../data/channels.json");
-const replies = require("../data/replies.json");
-const postModel = require("../models/post.js");
-const profiles = require("../models/profiles.js");
+const { loading, approved } = require("../../data/emojis.json");
+const { logs } = require("../../data/channels.json");
+const replies = require("../../data/replies.json");
+const postModel = require("../../models/post.js");
+const profiles = require("../../models/profiles.js");
 const mongoose = require("mongoose");
-const mongoUrl = require("../tokens.json").mongodb;
+const mongoUrl = require("../../tokens.json").mongodb;
 const db = require("quick.db");
 
 mongoose.connect(mongoUrl, {

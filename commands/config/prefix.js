@@ -1,10 +1,10 @@
 // const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
-// const { typing } = require("../data/emojis.json");
-// const { invisible } = require("../data/colors.json");
-// const replies = require("../data/replies.json");
+// const { typing } = require("../../data/emojis.json");
+// const { invisible } = require("../../data/colors.json");
+// const replies = require("../../data/replies.json");
 // const servers = require("../models/server.js");
 // const mongoose = require("mongoose");
-// const mongoUrl = require("../tokens.json").mongodb;
+// const mongoUrl = require("../..//tokens.json").mongodb;
 
 // mongoose.connect(mongoUrl, {
 //   useNewUrlParser: true

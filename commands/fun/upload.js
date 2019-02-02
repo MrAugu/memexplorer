@@ -1,12 +1,12 @@
 const Discord = require("discord.js");
 const validUrl = require("valid-url");
-const { downloading, loading } = require("../data/emojis.json");
-const { invisible } = require("../data/colors.json");
-const { posts } = require("../data/channels.json");
-const replies = require("../data/replies.json");
-const prePost = require("../models/post.js");
+const { downloading, loading } = require("../../data/emojis.json");
+const { invisible } = require("../../data/colors.json");
+const { posts } = require("../../data/channels.json");
+const replies = require("../../data/replies.json");
+const prePost = require("../../models/post.js");
 const mongoose = require("mongoose");
-const mongoUrl = require("../tokens.json").mongodb;
+const mongoUrl = require("../../tokens.json").mongodb;
 const db = require("quick.db");
 
 mongoose.connect(mongoUrl, {

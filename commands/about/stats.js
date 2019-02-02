@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const db = require("quick.db");
-const { invisible } = require("../data/colors.json");
-const { loading } = require("../data/emojis.json"); // eslint-disable-line no-unused-vars
+const { invisible } = require("../../data/colors.json");
+const { loading } = require("../../data/emojis.json"); // eslint-disable-line no-unused-vars
 
 module.exports = {
   name: "stats",

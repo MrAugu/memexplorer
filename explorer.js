@@ -11,18 +11,51 @@ client.commands = new Discord.Collection();
 client.memes = [];
 client.settings = require("./settings.js");
 
-const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
+const about = fs.readdirSync("./commands/about").filter(file => file.endsWith(".js"));
+const fun = fs.readdirSync("./commands/fun").filter(file => file.endsWith(".js"));
+const mod = fs.readdirSync("./commands/mod").filter(file => file.endsWith(".js"));
+const dev = fs.readdirSync("./commands/dev").filter(file => file.endsWith(".js"));
+const profile = fs.readdirSync("./commands/profile").filter(file => file.endsWith(".js"));
+const config = fs.readdirSync("./commands/config").filter(file => file.endsWith(".js"));
+
 
 const log = async (message) => {
   console.log(`[${new Date().toLocaleString()}] - ${message}`);
 };
 
 const init = async () => {
-  for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    client.commands.set(command.name, command);
+  let commandNum = 0;
+  for (const file of about) {
+    const aboutCommand = require(`./commands/about/${file}`);
+    client.commands.set(aboutCommand.name, aboutCommand);
+    commandNum++;
   }
-  console.log(`Loaded a total of ${commandFiles.length} commands.`);
+  for (const file of fun) {
+    const funCommand = require(`./commands/fun/${file}`);
+    client.commands.set(funCommand.name, funCommand);
+    commandNum++;
+  }
+  for (const file of mod) {
+    const modCommand = require(`./commands/mod/${file}`);
+    client.commands.set(mod.name, modCommand);
+    commandNum++;
+  }
+  for (const file of dev) {
+    const devCommand = require(`./commands/dev/${file}`);
+    client.commands.set(dev.name, devCommand);
+    commandNum++;
+  }
+  for (const file of profile) {
+    const profileCommand = require(`./commands/profile/${file}`);
+    client.commands.set(profile.name, profileCommand);
+    commandNum++;
+  }
+  for (const file of config) {
+    const configCommand = require(`./commands/config/${file}`);
+    client.commands.set(config.name, configCommand);
+    commandNum++;
+  }
+  console.log(`Loaded a total of ${commandNum} commands.`);
         
   const evtFiles = await readdir("./events/");
   evtFiles.forEach(file => {

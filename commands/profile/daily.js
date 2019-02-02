@@ -1,11 +1,11 @@
 const Discord = require('discord.js');
-const { invisible } = require("../data/colors.json");
-const { loading, currencyEmoji } = require("../data/emojis.json");
+const { invisible } = require("../../data/colors.json");
+const { loading, currencyEmoji } = require("../../data/emojis.json");
 const db = require('quick.db');
 const ms = require('parse-ms');
-const profiles = require("../models/profiles.js");
+const profiles = require("../../models/profiles.js");
 const mongoose = require("mongoose");
-const mongoUrl = require("../tokens.json").mongodb;
+const mongoUrl = require("../../tokens.json").mongodb;
 
 module.exports = {
     name: "daily",

@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
-const { invisible } = require("../data/colors.json")
-const { dblToken } = require("../tokens.json")
+const { invisible } = require("../../data/colors.json")
+const { dblToken } = require("../../tokens.json")
 const DBL = require('dblapi.js')
 const dbl = new DBL(dblToken, this.client)
 
