@@ -3,5 +3,5 @@ tokens.json
 json.sqlite
 eval.json
 exec.js
-package-log.json
+package-lock.json
 .eslintrc.json
