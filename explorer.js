@@ -33,7 +33,7 @@ const init = async () => {
     }
     for (const file of user) {
       const userCommand = require(`./commands/user/${file}`);
-      client.commands.set(user.name, userCommand);
+      client.commands.set(userCommand.name, userCommand);
       commandNum++;
     }
     for (const file of fun) {
@@ -43,17 +43,17 @@ const init = async () => {
     }
     for (const file of mod) {
       const modCommand = require(`./commands/mod/${file}`);
-      client.commands.set(mod.name, modCommand);
+      client.commands.set(modCommand.name, modCommand);
       commandNum++;
     }
     for (const file of dev) {
       const devCommand = require(`./commands/dev/${file}`);
-      client.commands.set(dev.name, devCommand);
+      client.commands.set(devCommand.name, devCommand);
       commandNum++;
     }
     for (const file of config) {
       const configCommand = require(`./commands/config/${file}`);
-      client.commands.set(config.name, configCommand);
+      client.commands.set(configCommand.name, configCommand);
       commandNum++;
     }
     console.log(`Loaded a total of ${commandNum} commands.`);
