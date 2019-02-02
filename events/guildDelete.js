@@ -27,7 +27,7 @@ module.exports = class {
       .setTimestamp();
       this.client.channels.get(events).send(embed);
 
-      if(client.settings.testing) return;
+      if(this.client.settings.testing) return;
       db.add(`serversLeft.${this.client.user.id}`, 1);
       dbl.postStats(this.client.guilds.size);
     }

@@ -1,8 +1,8 @@
 module.exports = {
-    "pre": "f.",
-    "testing": true,
-    "version": "0.2.0",
-    "status": "with f.help",
+    "pre": "e.",
+    "testing": false,
+    "version": "0.4.0",
+    "status": "with e.help",
     "currency": "Bytes",
     "server": "https://discord.gg/ZJ2jm4x",
     "owner": "275831434772742144",
