@@ -72,12 +72,12 @@ module.exports = {
             await msg.react(upvote);
             await msg.react(downvote);
             const filter = (r) => r.emoji.name === upvote || r.emoji.name === downvote;
-            const collector = msg.createReactionCollector(filter, { time: 120000 });
+            const collector = msg.createReactionCollector(filter, { time: 5000 });
             collector.on("collect", (r) => {
               if(r.users.last().id === user.id){
                 r.remove(user.id);
               } else {
-                if(r.users.last().id === client.user.id) return;
+                if(r.users.last().id !== client.user.id){
                 if (r.emoji.name === upvote) {
                   let multiplierLength = 43200000;
                   meme.upVotes += 1;
@@ -85,12 +85,14 @@ module.exports = {
                   if (lastMultiplier !== null && multiplierLength - (Date.now() - lastMultiplier) > 0) {
                     res.bytes += 2;
                   } else {
-                    res.bytes +=1;
+                    res.bytes += 1;
                   }
-                } else if (r.emoji.name === downvote) {
+                } 
+                if (r.emoji.name === downvote) {
                   meme.downVotes += 1;
-                  res.bytes -= 1;
+                  res.bytes -= 2;
                 }
+              }
               }
             });
 
