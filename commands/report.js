@@ -3,7 +3,6 @@ const ms = require("parse-ms");
 const { typing } = require("../data/emojis.json");
 const { reports } = require("../data/channels.json");
 const { red } = require("../data/colors.json");
-const { pre } = require("../settings.json");
 const posts = require("../models/post.js");
 const mongoose = require("mongoose");
 const mongoUrl = require("../tokens.json").mongodb;
@@ -21,7 +20,7 @@ module.exports = {
     const msg = await message.channel.send(`${typing} Sending report...`);
 
     if(isNaN(args[0])) return msg.edit(`Please provide a number of the meme id.`);
-    if(!args[1]) return msg.edit(`Please include a reason for your report. Usage: \`${prefix}report <meme id> <reason>\``);
+    if(!args[1]) return msg.edit(`Please include a reason for your report. Usage: \`${client.settings.pre}report <meme id> <reason>\``);
     
     let i = args[0];
 

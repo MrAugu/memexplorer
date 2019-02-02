@@ -4,12 +4,12 @@ const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
 
 const tokens = require("./tokens.json");
-const settings = require("./settings.json"); // eslint-disable-line no-unused-vars
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
 client.memes = [];
+client.settings = require("./settings.js");
 
 const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
 

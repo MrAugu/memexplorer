@@ -2,7 +2,6 @@ const Discord = require("discord.js");
 const db = require("quick.db");
 const { invisible } = require("../data/colors.json");
 const { loading } = require("../data/emojis.json"); // eslint-disable-line no-unused-vars
-const { version } = require("../settings.json");
 
 module.exports = {
   name: "stats",
@@ -23,7 +22,7 @@ module.exports = {
       .setColor(invisible)
       .setThumbnail(client.user.avatarURL)
       .addField("Born On", client.user.createdAt)
-      .addField("Current Version", version, true)
+      .addField("Current Version", client.settings.version, true)
       .addField("Messages Sent", `${botMessages} messages`, true)
       .addField("Servers", `${client.guilds.size} servers`, true)
       .addField("Users", `${client.users.size.toLocaleString()} users`, true)

@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const { invisible } = require("../data/colors.json");
 const emoji = require("../data/emojis.json");
-const { currency } = require("../settings.json");
 const replies = require("../data/replies.json");
 const profiles = require("../models/profiles.js");
 const mongoose = require("mongoose");
@@ -44,7 +43,7 @@ module.exports = {
         const embed = new Discord.RichEmbed()
         .setThumbnail(user.user.displayAvatarURL)
         .addField("User", `${user.user.tag}`, true)
-        .addField(currency, `${emoji.currencyEmoji} 0`, true)
+        .addField(client.settings.currency, `${emoji.currencyEmoji} 0`, true)
         .addField("Bio", `No bio set`)
         .setFooter(`0 posts`)
         .setColor(invisible)
@@ -59,7 +58,7 @@ module.exports = {
         const embed = new Discord.RichEmbed()
         .setThumbnail(user.user.displayAvatarURL)
         .addField("User", `${user.user.tag}${ranks}`, true)
-        .addField(currency, `${emoji.currencyEmoji} ${u.bytes}`, true)
+        .addField(client.settings.currency, `${emoji.currencyEmoji} ${u.bytes}`, true)
         .addField("Bio", `${u.bio}`)
         .setFooter(`${u.totalPosts} posts`)
         .setColor(invisible)

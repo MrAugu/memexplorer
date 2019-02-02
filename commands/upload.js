@@ -3,7 +3,6 @@ const validUrl = require("valid-url");
 const { downloading, loading } = require("../data/emojis.json");
 const { invisible } = require("../data/colors.json");
 const { posts } = require("../data/channels.json");
-const { pre } = require("../settings.json");
 const replies = require("../data/replies.json");
 const prePost = require("../models/post.js");
 const mongoose = require("mongoose");
@@ -34,11 +33,11 @@ module.exports = {
           img = args[0];
           if(args[1]) titlePost = args.slice(1).join(" ");
         } else {
-          return msg.edit(`That was not a valid url ${message.author.mention}.\nCorrect Usage: \`${prefix}upload <image>\``);
+          return msg.edit(`That was not a valid url ${message.author.mention}.\nCorrect Usage: \`${client.settings.pre}upload <image>\``);
         }
       } else {
         img = message.attachments.first().url;
-        if(!img) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`#${prefix}upload <image>\``);
+        if(!img) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`#${client.settings.pre}upload <image>\``);
         if(args[0]) titlePost = args.join(" ");
       }
 
@@ -88,7 +87,7 @@ module.exports = {
 
     } catch (error) {
       console.log(error);
-      msg.edit("An error occured while uploading image to database! Please make sure you are uploading an image/gif/video, and not something else.");
+      return msg.edit("An error occured while uploading image to database! Please make sure you are uploading an image/gif, and not something else.");
     }
   },
 };

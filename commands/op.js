@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const { loading } = require("../data/emojis.json");
-const { currency, owner } = require("../settings.json");
 const replies = require("../data/replies.json");
 const profiles = require("../models/profiles.js");
 const mongoose = require("mongoose");
@@ -16,7 +15,7 @@ module.exports = {
   usage: "<user> <set/take/give> <amount>",
   args: true,
   async execute (client, message, args) {
-    if (!owner.includes(message.author.id)) return message.channel.send(replies.noPerms);
+    if (!client.settings.owner.includes(message.author.id)) return message.channel.send(replies.noPerms);
     const msg = await message.channel.send(`${loading} Editing profile...`);
 
     if((args[1].toLowerCase() !== "set" && args[1].toLowerCase() !== "take" && args[1].toLowerCase() !== "give") || !args[1]) return msg.edit("Please privde an action. Actions: set, take, give.")
@@ -56,7 +55,7 @@ module.exports = {
       if(action === "take") u.bytes -= amount;
       await u.save().catch(e => console.log(e));
 
-      return msg.edit(`**${user.user.tag}** now has ${u.bytes} ${currency}.`)
+      return msg.edit(`**${user.user.tag}** now has ${u.bytes} ${client.settings.currency}.`)
     });
   },
 };

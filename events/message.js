@@ -1,4 +1,3 @@
-const { pre, mods } = require("../settings.json");
 const profiles = require("../models/profiles.js");
 const channels = require("../models/channel.js");
 const servers = require("../models/server.js");
@@ -26,7 +25,7 @@ module.exports = class {
     if(message.author.id === "534766026664181780" || message.author.id === "523645776983752720") return message.channel.send("Don't hack me NSA, please!")
 
     const mPrefix = new RegExp(`^<@!?${this.client.user.id}> `);
-    const fPrefix = message.content.match(mPrefix) ? message.content.match(mPrefix)[0] : pre;
+    const fPrefix = message.content.match(mPrefix) ? message.content.match(mPrefix)[0] : this.client.data.pre;
     if (message.content.toLowerCase().indexOf(fPrefix) !== 0) return;
     const args = message.content.slice(fPrefix.length).trim().split(/ +/g);
 
@@ -59,7 +58,7 @@ module.exports = class {
     const timestamps = cooldowns.get(command.name);
     const cooldownAmount = cmd.cooldown * 100;
 
-    if (!mods.includes(message.author.id)) {
+    if (!this.client.settings.mod.includes(message.author.id)) {
       if (!timestamps.has(message.author.id)) {
         timestamps.set(message.author.id, now);
         setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);

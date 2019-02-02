@@ -1,5 +1,4 @@
 const Discord = require ("discord.js"); // eslint-disable-line no-unused-vars
-const { server, currency, pre } = require("../settings.json");
 const { typing } = require("../data/emojis.json")
 
 module.exports = {
@@ -18,14 +17,14 @@ module.exports = {
       let helpStr = 
 `**List of available commands**
 
-Type \`${pre}<command>\` to use a command. 
-To get more info on a specific command do \`${pre}help <command>\`
+Type \`${client.settings.pre}<command>\` to use a command. 
+To get more info on a specific command do \`${client.settings.server}help <command>\`
 
 **bio** - set your bio
 **daily** - earn a random number of Bytes every 24 hours.
 **donate** - sends a link to donate
 **invite** - invite link for the bot
-**leaderboard** - displays the users with the most ${currency}
+**leaderboard** - displays the users with the most ${client.settings.currency}
 **meme** - displays a meme
 **ping** - sends the bot's ping
 **play** - play an mp3 file
@@ -36,7 +35,7 @@ To get more info on a specific command do \`${pre}help <command>\`
 **support** - sends you the support server
 **upload** - upload a meme to the database
 
-Need more help? Join the support server: ${server}
+Need more help? Join the support server: ${client.settings.server}
 Website: https://memexplorer.com
 `;
 
@@ -59,7 +58,7 @@ ${helpStr}
 
       if (command.description) data.push(`**Description:** ${command.description}`);
       if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(", ")}`);
-      if (command.usage) data.push(`**Usage:** \`${prefix}${command.name} ${command.usage}\``);
+      if (command.usage) data.push(`**Usage:** \`${client.settings.pre}${command.name} ${command.usage}\``);
 
       data.push(`**Cooldown:** ${command.cooldown || 3} second(s)`);
 

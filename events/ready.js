@@ -1,5 +1,4 @@
 const { ready } = require('../data/channels.json');
-const { status, testing } = require('../settings.json');
 const dblHandler = require("../dbl.js");
 const { dblToken } = require("../tokens.json");
 const DBL = require("dblapi.js");
@@ -13,9 +12,9 @@ module.exports = class {
   async run () {
     console.log(`${this.client.user.username} is online. Running on ${this.client.guilds.size} servers`);
     this.client.channels.get(ready).send(`${this.client.user.username} has restarted. Running on \`${this.client.guilds.size}\` servers.`);
-    this.client.user.setActivity(status);
+    this.client.user.setActivity(this.client.testing);
 
-    if(testing) return;
+    if(this.client.settings.testing) return;
     dblHandler.startUp(this.client);
     dbl.postStats(this.client.guilds.size);
   
