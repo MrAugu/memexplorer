@@ -29,6 +29,7 @@ module.exports = {
         const newUser = new profiles({
           authorID: user.id,
           bytes: 0,
+          multiplier: false,
           bio: "No bio set",
           totalPosts: 0,
           blacklisted: false,

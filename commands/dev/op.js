@@ -15,7 +15,7 @@ module.exports = {
   usage: "<user> <set/take/give> <amount>",
   args: true,
   async execute (client, message, args) {
-    if (!client.settings.devs.includes(message.author.id)) return message.channel.send(replies.noPerms);
+    if (!client.settings.owner.includes(message.author.id)) return message.channel.send(replies.noPerms);
     const msg = await message.channel.send(`${loading} Editing profile...`);
 
     if((args[1].toLowerCase() !== "set" && args[1].toLowerCase() !== "take" && args[1].toLowerCase() !== "give") || !args[1]) return msg.edit("Please privde an action. Actions: set, take, give.")
@@ -37,6 +37,7 @@ module.exports = {
         const newUser = new profiles({
           authorID: user.id,
           bytes: 0,
+          multiplier: false,
           bio: "No bio set",
           totalPosts: 0,
           blacklisted: false,

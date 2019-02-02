@@ -15,7 +15,7 @@ const about = fs.readdirSync("./commands/about").filter(file => file.endsWith(".
 const fun = fs.readdirSync("./commands/fun").filter(file => file.endsWith(".js"));
 const mod = fs.readdirSync("./commands/mod").filter(file => file.endsWith(".js"));
 const dev = fs.readdirSync("./commands/dev").filter(file => file.endsWith(".js"));
-const profile = fs.readdirSync("./commands/profile").filter(file => file.endsWith(".js"));
+const user = fs.readdirSync("./commands/user").filter(file => file.endsWith(".js"));
 const config = fs.readdirSync("./commands/config").filter(file => file.endsWith(".js"));
 
 
@@ -24,47 +24,51 @@ const log = async (message) => {
 };
 
 const init = async () => {
-  let commandNum = 0;
-  for (const file of about) {
-    const aboutCommand = require(`./commands/about/${file}`);
-    client.commands.set(aboutCommand.name, aboutCommand);
-    commandNum++;
+  try{
+    let commandNum = 0;
+    for (const file of about) {
+      const aboutCommand = require(`./commands/about/${file}`);
+      client.commands.set(aboutCommand.name, aboutCommand);
+      commandNum++;
+    }
+    for (const file of user) {
+      const userCommand = require(`./commands/user/${file}`);
+      client.commands.set(user.name, userCommand);
+      commandNum++;
+    }
+    for (const file of fun) {
+      const funCommand = require(`./commands/fun/${file}`);
+      client.commands.set(funCommand.name, funCommand);
+      commandNum++;
+    }
+    for (const file of mod) {
+      const modCommand = require(`./commands/mod/${file}`);
+      client.commands.set(mod.name, modCommand);
+      commandNum++;
+    }
+    for (const file of dev) {
+      const devCommand = require(`./commands/dev/${file}`);
+      client.commands.set(dev.name, devCommand);
+      commandNum++;
+    }
+    for (const file of config) {
+      const configCommand = require(`./commands/config/${file}`);
+      client.commands.set(config.name, configCommand);
+      commandNum++;
+    }
+    console.log(`Loaded a total of ${commandNum} commands.`);
+          
+    const evtFiles = await readdir("./events/");
+    evtFiles.forEach(file => {
+      const eventName = file.split(".")[0];
+      const event = new (require(`./events/${file}`))(client);
+      client.on(eventName, (...args) => event.run(...args));
+      delete require.cache[require.resolve(`./events/${file}`)];
+    });
+    console.log(`Loaded a total of ${evtFiles.length} events.`);
+  }catch(e){
+    console.log(e);
   }
-  for (const file of fun) {
-    const funCommand = require(`./commands/fun/${file}`);
-    client.commands.set(funCommand.name, funCommand);
-    commandNum++;
-  }
-  for (const file of mod) {
-    const modCommand = require(`./commands/mod/${file}`);
-    client.commands.set(mod.name, modCommand);
-    commandNum++;
-  }
-  for (const file of dev) {
-    const devCommand = require(`./commands/dev/${file}`);
-    client.commands.set(dev.name, devCommand);
-    commandNum++;
-  }
-  for (const file of profile) {
-    const profileCommand = require(`./commands/profile/${file}`);
-    client.commands.set(profile.name, profileCommand);
-    commandNum++;
-  }
-  for (const file of config) {
-    const configCommand = require(`./commands/config/${file}`);
-    client.commands.set(config.name, configCommand);
-    commandNum++;
-  }
-  console.log(`Loaded a total of ${commandNum} commands.`);
-        
-  const evtFiles = await readdir("./events/");
-  evtFiles.forEach(file => {
-    const eventName = file.split(".")[0];
-    const event = new (require(`./events/${file}`))(client);
-    client.on(eventName, (...args) => event.run(...args));
-    delete require.cache[require.resolve(`./events/${file}`)];
-  });
-  console.log(`Loaded a total of ${evtFiles.length} events.`);
 };
 init();
 

@@ -14,7 +14,7 @@ module.exports = {
     async execute (client, message, args) {
         const msg = await message.channel.send(`${loading} Sending daily reward...`);
 
-        let cooldown = 8.64e+7;
+        let cooldown = 43200000;
         let lastDaily = await db.fetch(`lastDaily.${message.author.id}`);
         if (lastDaily !== null && cooldown - (Date.now() - lastDaily) > 0) {
             let timeObj = ms(cooldown - (Date.now() - lastDaily));

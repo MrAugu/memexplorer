@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const ms = require("parse-ms"); // eslint-disable-line no-unused-vars
+const db = require("quick.db");
 const { invisible } = require("../../data/colors.json");
 const { loading, upvote, downvote } = require("../../data/emojis.json"); // eslint-disable-line no-unused-vars
 const replies = require("../../data/replies.json");
@@ -78,10 +79,17 @@ module.exports = {
               } else {
                 if(r.users.last().id === client.user.id) return;
                 if (r.emoji.name === upvote) {
+                  let multiplierLength = 43200000;
                   meme.upVotes += 1;
-                  res.bytes += 1;
+                  let lastMultiplier = db.fetch(`lastMultiplier.${message.author.id}`, Date.now());
+                  if (lastMultiplier !== null && multiplierLength - (Date.now() - lastMultiplier) > 0) {
+                    res.bytes += 2;
+                  } else {
+                    res.bytes +=1;
+                  }
                 } else if (r.emoji.name === downvote) {
                   meme.downVotes += 1;
+                  res.bytes -= 1;
                 }
               }
             });

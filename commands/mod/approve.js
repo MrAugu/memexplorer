@@ -50,10 +50,18 @@ module.exports = {
     
             if (!res) {
               const newProfile = new profiles({
-                authorID: post.authorID,
+                authorID: user.id,
                 bytes: 0,
+                multiplier: false,
                 bio: "No bio set",
-                totalPosts: 1
+                totalPosts: 1,
+                blacklisted: false,
+                voted: false,
+                supporter: false,
+                supporterr: false,
+                supporterrr: false,
+                mod: false,
+                developer: false,
               });
     
               await newProfile.save().catch(e => console.log(e));

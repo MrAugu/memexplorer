@@ -30,8 +30,9 @@ module.exports.startUp = async (client) => {
         if (err) console.log(err);
         if (!u) {
           const newUser = new profiles({
-            authorID: voter.user,
-            bytes: 10,
+            authorID: user.id,
+            bytes: 0,
+            multiplier: false,
             bio: "No bio set",
             totalPosts: 0,
             blacklisted: false,
@@ -45,6 +46,8 @@ module.exports.startUp = async (client) => {
           await newUser.save().catch(e => console.log(e));
         } else {
           u.bytes += 10;
+          u.multiplier = true;
+          db.set(`lastMultiplier.${voter.user}`, Date.now());
         }
 
         await person.send("Thank you for voting for **Memexplorer**! I sent you **10 bytes** to your profile! (You can vote again in 12 hours to get more bytes!)")

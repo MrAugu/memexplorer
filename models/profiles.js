@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const profileSchema = mongoose.Schema({
   authorID: String,
   bytes: Number,
+  multiplier: Boolean,
   bio: String,
   totalPosts: Number,
   blacklisted: Boolean,

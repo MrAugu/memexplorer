@@ -27,9 +27,18 @@ module.exports = {
 
       if (!user) {
         const newUser = new profiles({
-          authorID: message.author.id,
+          authorID: user.id,
           bytes: 0,
-          bio: args.join(" ")
+          multiplier: false,
+          bio: args.join(" "),
+          totalPosts: 0,
+          blacklisted: false,
+          voted: false,
+          supporter: false,
+          supporterr: false,
+          supporterrr: false,
+          mod: false,
+          developer: false,          
         });
 
         await newUser.save().catch(e => console.log(e));
