@@ -1,7 +1,8 @@
 {
-    "pre": "e.",
+    "pre": "f.",
+    "testing": true,
     "version": "0.2.0",
-    "status": "with e.help",
+    "status": "with f.help",
     "currency": "Bytes",
     "server": "https://discord.gg/ZJ2jm4x",
     "owner": "275831434772742144",

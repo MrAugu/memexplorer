@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const { green } = require('../data/colors.json');
 const { events } = require('../data/channels.json');
+const { testing } = require('../settings.json');
 const moment = require('moment');
 const { dblToken } = require("../tokens.json");
 const DBL = require("dblapi.js");
@@ -27,6 +28,7 @@ module.exports = class {
       .setTimestamp();
       this.client.channels.get(events).send(embed);
 
+      if(testing) return;
       db.add(`serversJoined.${this.client.user.id}`, 1);
       dbl.postStats(this.client.guilds.size);
     }

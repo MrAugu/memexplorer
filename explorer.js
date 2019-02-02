@@ -27,9 +27,7 @@ const init = async () => {
   const evtFiles = await readdir("./events/");
   evtFiles.forEach(file => {
     const eventName = file.split(".")[0];
-    //log(`Loading Event: ${eventName}`);
     const event = new (require(`./events/${file}`))(client);
-
     client.on(eventName, (...args) => event.run(...args));
     delete require.cache[require.resolve(`./events/${file}`)];
   });
