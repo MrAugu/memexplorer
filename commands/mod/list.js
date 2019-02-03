@@ -22,7 +22,7 @@ module.exports = {
       authorID: message.author.id
     }, async (err, u) => {
       if (err) console.log(err);
-      if(!u.mod) {
+      if (!u.mod) {
         return message.channel.send(replies.noPerms);
       } else {
         const msg = await message.channel.send(`${loading} Fetching unapproved posts...`);

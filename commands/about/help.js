@@ -1,5 +1,5 @@
 const Discord = require ("discord.js"); // eslint-disable-line no-unused-vars
-const { typing } = require("../../data/emojis.json")
+const { typing } = require("../../data/emojis.json");
 
 module.exports = {
   name: "help",
@@ -13,8 +13,8 @@ module.exports = {
     const { commands } = message.client;
     const data = [];
 
-		if (!args.length) {
-      let helpStr = 
+    if (!args.length) {
+      const helpStr = 
 `**List of available commands**
 
 Type \`${client.settings.pre}<command>\` to use a command. 
@@ -40,13 +40,13 @@ Need more help? Join the support server: ${client.settings.server}
 Website: https://memexplorer.com
 `;
 
-      try{
-          await user.send(helpStr);
-          msg.edit(`Sent you a dm with my commands <@${message.author.id}>!`)
+      try {
+        await user.send(helpStr);
+        msg.edit(`Sent you a dm with my commands <@${message.author.id}>!`);
       } catch (e) {
-          return msg.edit(`Your dms are disabled  <@${message.author.id}>, here are my commands:
+        return msg.edit(`Your dms are disabled  <@${message.author.id}>, here are my commands:
 ${helpStr}
-          `)
+          `);
       }
     } else {
 

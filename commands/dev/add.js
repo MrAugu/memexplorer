@@ -1,6 +1,5 @@
 const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
 const { loading } = require("../../data/emojis.json");
-const { logs } = require("../../data/channels.json");
 const profiles = require("../../models/profiles.js");
 const replies = require("../../data/replies.json");
 const mongoose = require("mongoose");
@@ -17,9 +16,9 @@ module.exports = {
   args: true,
   async execute (client, message, args) {
     if (!client.settings.devs.includes(message.author.id)) return message.channel.send(replies.noPerms);
-    if(!args[0]) return message.channel.send("Please specifiy a user.")
-    if(!args[1]) return message.channel.send("Please specify a group to add the user to.");
-    if(args[1].toLowerCase() !== "supporter" && args[1].toLowerCase() !== "mod" && args[1].toLowerCase() !== "developer" && args[1].toLowerCase() !== "voter") return message.channel.send("That's not a valid group. Valid groups: supporoter, mod, voter, developer.")
+    if (!args[0]) return message.channel.send("Please specifiy a user.");
+    if (!args[1]) return message.channel.send("Please specify a group to add the user to.");
+    if (args[1].toLowerCase() !== "supporter" && args[1].toLowerCase() !== "mod" && args[1].toLowerCase() !== "developer" && args[1].toLowerCase() !== "voter") return message.channel.send("That's not a valid group. Valid groups: supporoter, mod, voter, developer.");
 
     const msg = await message.channel.send(`${loading} Adding user to ${args[1]} group...`);
 
@@ -30,25 +29,24 @@ module.exports = {
       authorID: user.id
     }, async (err, u) => {
       if (err) console.log(err);
-      if(args[1].toLowerCase() === "supporter"){
+      if (args[1].toLowerCase() === "supporter") {
         u.supporter = true;
-      } else if(args[1].toLowerCase() === "supporterr"){
+      } else if (args[1].toLowerCase() === "supporterr") {
         u.supporter = true;
         u.supporterr = true;
-      } else if(args[1].toLowerCase() === "supporterrr"){
+      } else if (args[1].toLowerCase() === "supporterrr") {
         u.supporter = true;
         u.supporterr = true;
         u.supporterrr = true;
-      } else if(args[1].toLowerCase() === "mod"){
+      } else if (args[1].toLowerCase() === "mod") {
         u.mod = true;
-      } else if(args[1].toLowerCase() === "voter"){
+      } else if (args[1].toLowerCase() === "voter") {
         u.voted = true;
-      } else if(args[1].toLowerCase() === "developer"){
+      } else if (args[1].toLowerCase() === "developer") {
         u.developer = true;
       }
 
-      const username = await client.fetchUser(u.authorID);
-      msg.edit(`Added **${user.user.tag}** as a **${args[1]}**`)
+      msg.edit(`Added **${user.user.tag}** as a **${args[1]}**`);
 
       await u.save().catch(e => console.log(e));
     });

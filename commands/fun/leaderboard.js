@@ -12,7 +12,7 @@ mongoose.connect(mongoUrl, {
 
 module.exports = {
   name: "leaderboard",
-  description: `View the people with the most money.`,
+  description: "View the people with the most money.",
   cooldown: "5",
   async execute (client, message, args) { // eslint-disable-line no-unused-vars
     const msg = await message.channel.send(`${loading} Fetching leaderboard...`);

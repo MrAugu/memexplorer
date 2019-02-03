@@ -6,6 +6,7 @@ const profiles = require("../../models/profiles.js");
 const mongoose = require("mongoose");
 const mongoUrl = require("../../tokens.json").mongodb;
 const db = require("quick.db");
+const pre = "e.";
 
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true
@@ -23,7 +24,7 @@ module.exports = {
       authorID: message.author.id
     }, async (err, u) => {
       if (err) console.log(err);
-      if(!u.mod) {
+      if (!u.mod) {
         return message.channel.send(replies.noPerms);
       } else {
         const msg = await message.channel.send(`${loading} Approving post...`);
