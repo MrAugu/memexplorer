@@ -1,8 +1,3 @@
-const profiles = require("../models/profiles.js");
-const channels = require("../models/channel.js");
-const servers = require("../models/server.js");
-const mongoose = require("mongoose");
-const mongoUrl = require("../tokens.json").mongodb;
 const fs = require("fs");
 const Discord = require("discord.js");
 const cooldowns = new Discord.Collection();
@@ -21,8 +16,6 @@ module.exports = class {
 
     if (message.content.startsWith("wii ")) return message.channel.send("The prefix has been changed to `e.`");
     if (!message.channel.guild) return message.channel.send("I can't execute commands inside DMs! Please run this command in a server.");
-    
-    if(message.author.id === "534766026664181780" || message.author.id === "523645776983752720") return message.channel.send("Don't hack me NSA, please!")
 
     const mPrefix = new RegExp(`^<@!?${this.client.user.id}> `);
     const fPrefix = message.content.match(mPrefix) ? message.content.match(mPrefix)[0] : this.client.settings.pre;

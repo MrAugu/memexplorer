@@ -1,8 +1,4 @@
 const { ready } = require('../data/channels.json');
-const dblHandler = require("../dbl.js");
-const { dblToken } = require("../tokens.json");
-const DBL = require("dblapi.js");
-const dbl = new DBL(dblToken, this.client);
 
 module.exports = class {
   constructor (client) {
@@ -15,8 +11,5 @@ module.exports = class {
     this.client.user.setActivity(this.client.testing);
 
     if(this.client.settings.testing) return;
-    dblHandler.startUp(this.client);
-    dbl.postStats(this.client.guilds.size);
-  
   }
 };

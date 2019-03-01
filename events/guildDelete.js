@@ -2,9 +2,6 @@ const Discord = require('discord.js');
 const { red } = require('../data/colors.json');
 const { events } = require('../data/channels.json');
 const moment = require('moment');
-const { dblToken } = require("../tokens.json");
-const DBL = require("dblapi.js");
-const dbl = new DBL(dblToken, this.client);
 const db = require('quick.db');
 
 module.exports = class {
@@ -28,7 +25,5 @@ module.exports = class {
       this.client.channels.get(events).send(embed);
 
       if(this.client.settings.testing) return;
-      db.add(`serversLeft.${this.client.user.id}`, 1);
-      dbl.postStats(this.client.guilds.size);
     }
 };
