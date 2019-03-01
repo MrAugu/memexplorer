@@ -54,4 +54,6 @@ module.exports.startUp = async (client) => {
       });
     } catch (e) {
       console.log(e);
-    }1
+    }
+  });
+};
