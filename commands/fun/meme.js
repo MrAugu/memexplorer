@@ -24,15 +24,15 @@ module.exports = {
       const id = Math.round(Math.random() * count);
 
       const res = await posts.findOne({ id: id, state: "POST_APPROVED" });
-      if (!res) return message.channel.send("This meme might have been removed from database. Please try again.");
-      if (res === null) return message.channel.send("This meme might have been removed from database. Please try again.");
+      if (!res) return msg.edit("This meme might have been removed from database. Please try again.");
+      if (res === null) return msg.edit("This meme might have been removed from database. Please try again.");
 
       profiles.findOne({
         authorID: res.authorID
       }, async (err, u) => {
         if (err) console.log(err);
-        if (err) return message.channel.send("An internal error occured while running this command. Please try again.");
-        if (!u) return message.channel.send("An internal error occured while running this command. Please try again.");
+        if (err) return msg.edit("An internal error occured while running this command. Please try again.");
+        if (!u) return msg.edit("An internal error occured while running this command. Please try again.");
         u.bytes += 1;
 
         const t = ms(Date.now() - res.uploadedAt);
@@ -84,8 +84,8 @@ module.exports = {
       });
     } if (args[0]) {
       const res = await posts.findOne({ id: args[0], state: "POST_APPROVED" });
-      if (!res) return message.channel.send("This meme might have been removed from database. Please try again.");
-      if (res === null) return message.channel.send("This meme might have been removed from database. Please try again.");
+      if (!res) return msg.edit("This meme might have been removed from database. Please try again.");
+      if (res === null) return msg.edit("This meme might have been removed from database. Please try again.");
 
       const t = ms(Date.now() - res.uploadedAt);
       const time = convertTime(t);
