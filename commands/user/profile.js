@@ -42,29 +42,29 @@ module.exports = {
         });
         newUser.save().catch(e => console.log(e));
         const embed = new Discord.RichEmbed()
-        .setThumbnail(user.user.displayAvatarURL)
-        .addField("User", `${user.user.tag}`, true)
-        .addField(client.settings.currency, `${emoji.currencyEmoji} 0`, true)
-        .addField("Bio", `No bio set`)
-        .setFooter(`0 posts`)
-        .setColor(invisible)
-        .setTimestamp();
+          .setThumbnail(user.user.displayAvatarURL)
+          .addField("User", `${user.user.tag}`, true)
+          .addField(client.settings.currency, `${emoji.currencyEmoji} 0`, true)
+          .addField("Bio", "No bio set")
+          .setFooter("0 posts")
+          .setColor(invisible)
+          .setTimestamp();
         return msg.edit(embed);
       } else {
-        if(u.voted) ranks += " " + emoji.voted;
-        if(u.supporter) ranks += " " + emoji.supporter;
-        if(u.mod) ranks += " " + emoji.mod;
-        if(u.developer) ranks += " " + emoji.developer;
+        if (u.voted) ranks += " " + emoji.voted;
+        if (u.supporter) ranks += " " + emoji.supporter;
+        if (u.mod) ranks += " " + emoji.mod;
+        if (u.developer) ranks += " " + emoji.developer;
 
         const embed = new Discord.RichEmbed()
-        .setThumbnail(user.user.displayAvatarURL)
-        .addField("User", `${user.user.tag}${ranks}`, true)
-        .addField(client.settings.currency, `${emoji.currencyEmoji} ${u.bytes}`, true)
-        .addField("Bio", `${u.bio}`)
-        .setFooter(`${u.totalPosts} posts`)
-        .setColor(invisible)
-        .setTimestamp();
-      return msg.edit(embed);
+          .setThumbnail(user.user.displayAvatarURL)
+          .addField("User", `${user.user.tag}${ranks}`, true)
+          .addField(client.settings.currency, `${emoji.currencyEmoji} ${u.bytes}`, true)
+          .addField("Bio", `${u.bio}`)
+          .setFooter(`${u.totalPosts} posts`)
+          .setColor(invisible)
+          .setTimestamp();
+        return msg.edit(embed);
       }
     });
   },

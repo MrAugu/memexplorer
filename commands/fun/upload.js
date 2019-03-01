@@ -26,26 +26,26 @@ module.exports = {
 
     try {
       let img;
-      let titlePost
+      let titlePost;
 
-      if(!message.attachments.first()){
-        if(args[0] && validUrl.isUri(args[0])){
+      if (!message.attachments.first()) {
+        if (args[0] && validUrl.isUri(args[0])) {
           img = args[0];
-          if(args[1]) titlePost = args.slice(1).join(" ");
+          if (args[1]) titlePost = args.slice(1).join(" ");
         } else {
           return msg.edit(`That was not a valid url ${message.author.mention}.\nCorrect Usage: \`${client.settings.pre}upload <image>\``);
         }
       } else {
         img = message.attachments.first().url;
-        if(!img) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`#${client.settings.pre}upload <image>\``);
-        if(args[0]) titlePost = args.join(" ");
+        if (!img) return msg.edit(`You didn't provide any arguments ${message.author.mention}.\nCorrect Usage: \`#${client.settings.pre}upload <image>\``);
+        if (args[0]) titlePost = args.join(" ");
       }
 
       if (!img) return msg.edit(replies.noImg);
 
       const docCount = await prePost.countDocuments();
       const id = docCount + 1;
-      if(titlePost === null || titlePost === undefined) titlePost = "Untitled";
+      if (titlePost === null || titlePost === undefined) titlePost = "Untitled";
 
       const post = new prePost({
         id: id,

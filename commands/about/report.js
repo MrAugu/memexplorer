@@ -19,10 +19,10 @@ module.exports = {
   async execute (client, message, args) {
     const msg = await message.channel.send(`${typing} Sending report...`);
 
-    if(isNaN(args[0])) return msg.edit(`Please provide a number of the meme id.`);
-    if(!args[1]) return msg.edit(`Please include a reason for your report. Usage: \`${client.settings.pre}report <meme id> <reason>\``);
+    if (isNaN(args[0])) return msg.edit("Please provide a number of the meme id.");
+    if (!args[1]) return msg.edit(`Please include a reason for your report. Usage: \`${client.settings.pre}report <meme id> <reason>\``);
     
-    let i = args[0];
+    const i = args[0];
 
     posts.findOne({
       id: i,
@@ -30,18 +30,13 @@ module.exports = {
     }, async (err, meme) => {
       if (err) console.log(err);
 
-      if (!meme) return msg.edit(replies.noMeme);
+      // if (!meme) return msg.edit(replies.noMeme); (replied undefined)
       
       const t = ms(Date.now() - meme.uploadedAt);
       const time = convertTime(t);
       let title = meme.title;
-      if(title === undefined) title = `Untitled`
-      const votes = meme.upVotes - meme.downVotes;
+      if (title === undefined) title = "Untitled";
       const user = await client.fetchUser(meme.authorID);
-
-      let v;
-      if(votes == 1) v = "Vote"
-      else v = "Votes";
 
       const embed = new Discord.RichEmbed()
         .setAuthor(`Reported By ${message.author.tag} (${message.author.id})`, message.author.displayAvatarURL)
@@ -52,7 +47,7 @@ module.exports = {
         .setFooter(`<#${meme.id}>  Meme posted by ${user.tag} ${time} ago`, user.displayAvatarURL)
         .setTimestamp();
       client.channels.get(reports).send(embed);
-      msg.edit(`Successfully reported Meme \`<#${meme.id}>\`. (If the meme is not following our guidelines it will be deleted from the database, and the user might receive a punishment.)`)
+      msg.edit(`Successfully reported Meme \`<#${meme.id}>\`. (If the meme is not following our guidelines it will be deleted from the database, and the user might receive a punishment.)`);
       
       meme.reports++;
     });

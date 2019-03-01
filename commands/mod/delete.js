@@ -17,37 +17,37 @@ module.exports = {
   usage: "<id>",
   async execute (client, message, args) {
     profiles.findOne({
-        authorID: message.author.id
-      }, async (err, u) => {
-        if (err) console.log(err);
-        if(!u.mod) {
-          return message.channel.send(replies.noPerms);
-        } else {
-            const msg = await message.channel.send(`${loading} Deleting post...`);
+      authorID: message.author.id
+    }, async (err, u) => {
+      if (err) console.log(err);
+      if (!u.mod) {
+        return message.channel.send(replies.noPerms);
+      } else {
+        const msg = await message.channel.send(`${loading} Deleting post...`);
 
-            const reason = args.slice(1).join(" ");
-            if (!reason) return msg.edit(`Please provide a reason for deleting this post.`);
+        const reason = args.slice(1).join(" ");
+        if (!reason) return msg.edit("Please provide a reason for deleting this post.");
         
-            posts.findOne({
-                id: args[0],
-                state: "POST_APPROVED"
-            }, async (err, post) => {
-                if (!post) return msg.edit("Couldn't find any post with this id.");
+        posts.findOne({
+          id: args[0],
+          state: "POST_APPROVED"
+        }, async (err, post) => {
+          if (!post) return msg.edit("Couldn't find any post with this id.");
             
-                post.state = "POST_DELETED";
-                post.deletedBy = message.author.id;
+          post.state = "POST_DELETED";
+          post.deletedBy = message.author.id;
                 
-                await post.save().catch(e => console.log(e));
-                const user = await client.fetchUser(post.authorID);
-                msg.edit(`Deleted post \`<#${post.id}>\` from database.`);
-                client.channels.get(logs).send(`🗑 **${message.author.tag}** (${message.author.id}) deleted a post with id \`#${post.id}\` submitted by **${user.tag}** (${post.authorID}). Reason: ${reason}`);
-                try {
-                await user.send(`🗑 Your post with \`<#${post.id}>\` has been deleted by \`${message.author.tag}\`. Reason: ${reason}`);
-                } catch (e) {
-                return;
-                }
-            });
-        }
+          await post.save().catch(e => console.log(e));
+          const user = await client.fetchUser(post.authorID);
+          msg.edit(`Deleted post \`<#${post.id}>\` from database.`);
+          client.channels.get(logs).send(`🗑 **${message.author.tag}** (${message.author.id}) deleted a post with id \`#${post.id}\` submitted by **${user.tag}** (${post.authorID}). Reason: ${reason}`);
+          try {
+            await user.send(`🗑 Your post with \`<#${post.id}>\` has been deleted by \`${message.author.tag}\`. Reason: ${reason}`);
+          } catch (e) {
+            return;
+          }
+        });
+      }
     });
   },  
 };
