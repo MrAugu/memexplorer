@@ -2,4 +2,15 @@
     "loading": "<a:l:530805582324826127>",
     "typing": "<a:t:530805554008948747>",
     "downloading": "<a:d:530904503596089354>",
+    "upvote": "👍",
+    "downvote": "👎",
+    "mod": "🔨",
+    "voted": "⬆",
+    "supporter": "💵",
+    "whitelist": "⚪",
+    "blacklist": "⚫",
+    "developer": "<:dev:537828633461522442>",
+    "approved": "<:approved:533753310604427265>",
+    "rejected": "<:rejected:533753310428266517>",
+    "currencyEmoji": "<:memexplorer:538837036497371147>"
 }

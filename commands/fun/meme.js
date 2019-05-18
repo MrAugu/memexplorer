@@ -7,6 +7,7 @@ const posts = require("../../models/post.js");
 const profiles = require("../../models/profiles.js");
 const mongoose = require("mongoose");
 const mongoUrl = require("../../tokens.json").mongodb;
+let sent = false;
 
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true
@@ -17,28 +18,35 @@ module.exports = {
   cooldown: "5",
   usage: "<id of post>",
   async execute (client, message, args) { // eslint-disable-line no-unused-vars
+
     const msg = await message.channel.send(`${loading} Fetching meme...`);
 
     if (!args[0]) {
-      const count = await posts.countDocuments();
-      const id = Math.round(Math.random() * count);
-
-      const res = await posts.findOne({ id: id, state: "POST_APPROVED" });
-      if (!res) return msg.edit("This meme might have been removed from database. Please try again.");
-      if (res === null) return msg.edit("This meme might have been removed from database. Please try again.");
+      let count = await posts.countDocuments();
+      let idNum = Math.round(Math.random() * count);
+      let res = await posts.findOne({ id: idNum, state: "POST_APPROVED" });
+      try {
+        while(!res || res === undefined || res.id == null){
+          idNum = Math.round(Math.round() * count);
+          res = await posts.findOne({ id: idNum, state: "POST_APPROVED" });
+        }
+        if (res === undefined || !res) return msg.edit("This meme might have been removed from database. Please try again.");
+      } catch (error) {
+        msg.delete();
+        client.commands.get("meme").execute(client, message, args);
+        return;
+      }
 
       profiles.findOne({
         authorID: res.authorID
       }, async (err, u) => {
         if (err) console.log(err);
-        if (err) return msg.edit("An internal error occured while running this command. Please try again.");
-        if (!u) return msg.edit("An internal error occured while running this command. Please try again.");
-        u.bytes += 1;
+        if (err) return msg.edit("This meme might have been removed from database. Please try again.");
 
         const t = ms(Date.now() - res.uploadedAt);
         const time = convertTime(t);
         let title = res.title;
-        if (title === undefined) title = "Untitled";
+        if (title === undefined || args.join(" ").length > 100) title = "Untitled";
         const user = await client.fetchUser(res.authorID);
 
         const embed = new Discord.RichEmbed()
@@ -52,6 +60,8 @@ module.exports = {
         await msg.react(upvote);
         await msg.react(downvote);
 
+        sent = true;
+
         const filter = (r, usr) => r.emoji.name === upvote || r.emoji.name === downvote || usr.id !== client.user.id || usr.id !== res.authorID;
         const collector = msg.createReactionCollector(filter, { time: 120000 });
         collector.on("collect", (r) => {
@@ -64,14 +74,14 @@ module.exports = {
                 res.upVotes += 1;
                 const lastMultiplier = db.fetch(`lastMultiplier.${message.author.id}`, Date.now());
                 if (lastMultiplier !== null && multiplierLength - (Date.now() - lastMultiplier) > 0) {
-                  u.bytes += 2;
+                  if(u && u != undefined) u.bytes += 2;
                 } else {
-                  u.bytes += 1;
+                  if(u && u != undefined) u.bytes += 1;
                 }
               } 
               if (r.emoji.name === downvote) {
                 res.downVotes += 1;
-                u.bytes -= 2;
+                if(u && u != undefined) u.bytes -= 2;
               }
             }
           }
@@ -79,13 +89,15 @@ module.exports = {
 
         collector.on("end", async c => { // eslint-disable-line no-unused-vars
           await res.save().catch(e => console.log(e));
-          await u.save().catch(e => console.log(e));
+          if(u && u != undefined) await u.save().catch(e => console.log(e));
         });
+
       });
-    } if (args[0]) {
-      const res = await posts.findOne({ id: args[0], state: "POST_APPROVED" });
+    } else if (args[0]) {
+      let res = await posts.findOne({ id: args[0], state: "POST_APPROVED" });
+
       if (!res) return msg.edit("This meme might have been removed from database. Please try again.");
-      if (res === null) return msg.edit("This meme might have been removed from database. Please try again.");
+      if (res === undefined) return msg.edit("This meme might have been removed from database. Please try again.");
 
       const t = ms(Date.now() - res.uploadedAt);
       const time = convertTime(t);
@@ -99,8 +111,10 @@ module.exports = {
         .setColor(invisible)
         .setFooter(`<#${res.id}>  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL);
       msg.edit(embed);
+      sent = true;
 
     }
+
   }
 };
 
