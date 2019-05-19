@@ -7,7 +7,6 @@ const posts = require("../../models/post.js");
 const profiles = require("../../models/profiles.js");
 const mongoose = require("mongoose");
 const mongoUrl = require("../../tokens.json").mongodb;
-let sent = false;
 
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true
@@ -49,48 +48,90 @@ module.exports = {
         if (title === undefined || args.join(" ").length > 100) title = "Untitled";
         const user = await client.fetchUser(res.authorID);
 
-        const embed = new Discord.RichEmbed()
+        if(res.type === undefined) res.type = "img";
+        if(res.type === "img") {
+          const embed = new Discord.RichEmbed()
           .setAuthor(`${res.upVotes} Likes / ${res.downVotes} Dislikes`)
           .setTitle(`**${title}**`)
           .setImage(res.url)
           .setColor(invisible)
           .setFooter(`<#${res.id}>  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL);
-        msg.edit(embed);
+          msg.edit(embed);
 
-        await msg.react(upvote);
-        await msg.react(downvote);
-
-        sent = true;
-
-        const filter = (r, usr) => r.emoji.name === upvote || r.emoji.name === downvote || usr.id !== client.user.id || usr.id !== res.authorID;
-        const collector = msg.createReactionCollector(filter, { time: 120000 });
-        collector.on("collect", (r) => {
-          if (r.users.last().id === user.id) {
-            r.remove(user.id);
-          } else {
-            if (r.users.last().id !== client.user.id) {
-              if (r.emoji.name === upvote) {
-                const multiplierLength = 43200000;
-                res.upVotes += 1;
-                const lastMultiplier = db.fetch(`lastMultiplier.${message.author.id}`, Date.now());
-                if (lastMultiplier !== null && multiplierLength - (Date.now() - lastMultiplier) > 0) {
-                  if(u && u != undefined) u.bytes += 2;
-                } else {
-                  if(u && u != undefined) u.bytes += 1;
+          await msg.react(upvote);
+          await msg.react(downvote);
+  
+          const filter = (r, usr) => r.emoji.name === upvote || r.emoji.name === downvote || usr.id !== client.user.id || usr.id !== res.authorID;
+          const collector = msg.createReactionCollector(filter, { time: 120000 });
+          collector.on("collect", (r) => {
+            if (r.users.last().id === user.id) {
+              r.remove(user.id);
+            } else {
+              if (r.users.last().id !== client.user.id) {
+                if (r.emoji.name === upvote) {
+                  const multiplierLength = 43200000;
+                  res.upVotes += 1;
+                  const lastMultiplier = db.fetch(`lastMultiplier.${message.author.id}`, Date.now());
+                  if (lastMultiplier !== null && multiplierLength - (Date.now() - lastMultiplier) > 0) {
+                    if(u && u != undefined) u.bytes += 2;
+                  } else {
+                    if(u && u != undefined) u.bytes += 1;
+                  }
+                } 
+                if (r.emoji.name === downvote) {
+                  res.downVotes += 1;
+                  if(u && u != undefined) u.bytes -= 2;
                 }
-              } 
-              if (r.emoji.name === downvote) {
-                res.downVotes += 1;
-                if(u && u != undefined) u.bytes -= 2;
               }
             }
-          }
-        });
+          });
+  
+          collector.on("end", async c => { // eslint-disable-line no-unused-vars
+            await res.save().catch(e => console.log(e));
+            if(u && u != undefined) await u.save().catch(e => console.log(e));
+          });
+        } else if(res.type === "vid") {
+          const memeAttachment = new Discord.Attachment(res.url);
+          const vidString = 
+  `${res.upVotes} Likes / ${res.downVotes} Dislikes
+  **${title} - \`<#${res.id}>  Posted by ${user.tag} ${time} ago\`**
+  `;
+          msg.delete();
+          const msg2 = await message.channel.send (vidString, memeAttachment);
 
-        collector.on("end", async c => { // eslint-disable-line no-unused-vars
-          await res.save().catch(e => console.log(e));
-          if(u && u != undefined) await u.save().catch(e => console.log(e));
-        });
+          await msg2.react(upvote);
+          await msg2.react(downvote);
+  
+          const filter = (r, usr) => r.emoji.name === upvote || r.emoji.name === downvote || usr.id !== client.user.id || usr.id !== res.authorID;
+          const collector = msg2.createReactionCollector(filter, { time: 120000 });
+          collector.on("collect", (r) => {
+            if (r.users.last().id === user.id) {
+              r.remove(user.id);
+            } else {
+              if (r.users.last().id !== client.user.id) {
+                if (r.emoji.name === upvote) {
+                  const multiplierLength = 43200000;
+                  res.upVotes += 1;
+                  const lastMultiplier = db.fetch(`lastMultiplier.${message.author.id}`, Date.now());
+                  if (lastMultiplier !== null && multiplierLength - (Date.now() - lastMultiplier) > 0) {
+                    if(u && u != undefined) u.bytes += 2;
+                  } else {
+                    if(u && u != undefined) u.bytes += 1;
+                  }
+                } 
+                if (r.emoji.name === downvote) {
+                  res.downVotes += 1;
+                  if(u && u != undefined) u.bytes -= 2;
+                }
+              }
+            }
+          });
+  
+          collector.on("end", async c => { // eslint-disable-line no-unused-vars
+            await res.save().catch(e => console.log(e));
+            if(u && u != undefined) await u.save().catch(e => console.log(e));
+          });
+        }
 
       });
     } else if (args[0]) {
@@ -104,17 +145,25 @@ module.exports = {
       let title = res.title;
       if (title === undefined) title = "Untitled";
       const user = await client.fetchUser(res.authorID);
-      const embed = new Discord.RichEmbed()
+      if(res.type === undefined) res.type = "img";
+      if(res.type === "img") {
+        const embed = new Discord.RichEmbed()
         .setAuthor(`${res.upVotes} Likes / ${res.downVotes} Dislikes`)
         .setTitle(`**${title}**`)
         .setImage(res.url)
         .setColor(invisible)
         .setFooter(`<#${res.id}>  Posted by ${user.tag} ${time} ago`, user.displayAvatarURL);
-      msg.edit(embed);
-      sent = true;
-
+        msg.edit(embed);
+      } else if(res.type === "vid") {
+        const memeAttachment = new Discord.Attachment(res.url);
+        const vidString = 
+`${res.upVotes} Likes / ${res.downVotes} Dislikes
+**${title} - \`<#${res.id}>  Posted by ${user.tag} ${time} ago\`**
+`;
+        msg.delete();
+        message.channel.send(vidString, memeAttachment);
+      }
     }
-
   }
 };
 

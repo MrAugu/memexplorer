@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+/* const mongoose = require("mongoose");
 const validUrl = require("valid-url");
 const mongoUrl = require("../../tokens.json").mongodb;
 const { loading } = require("../../data/emojis.json");

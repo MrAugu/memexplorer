@@ -15,7 +15,6 @@ const postSchema = mongoose.Schema({
   deletedBy: String,
   reports: Number,
   type: String,
-  videoUrl: String,
 });
 
 module.exports = mongoose.model("posts", postSchema);
