@@ -1,7 +1,7 @@
 const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
 const ms = require("parse-ms");
 const { typing } = require("../../data/emojis.json");
-const { reports } = require("../../data/channels.json");
+const { reports, logs } = require("../../data/channels.json");
 const { red } = require("../../data/colors.json");
 const posts = require("../..//models/post.js");
 const mongoose = require("mongoose");
@@ -41,13 +41,14 @@ module.exports = {
       const embed = new Discord.RichEmbed()
         .setAuthor(`Reported By ${message.author.tag} (${message.author.id})`, message.author.displayAvatarURL)
         .setTitle(`${title} - ${meme.upVotes} Likes / ${meme.downVotes} Dislikes`)
-        .setDescription(`Reason: ${args[1]}`)
+        .setDescription(`Reason: ${args.slice(1).join(" ")}`)
         .setImage(meme.url)
         .setColor(red)
         .setFooter(`<#${meme.id}>  Meme posted by ${user.tag} ${time} ago`, user.displayAvatarURL)
         .setTimestamp();
       client.channels.get(reports).send(embed);
-      msg.edit(`Successfully reported Meme \`<#${meme.id}>\`. (If the meme is not following our guidelines it will be deleted from the database, and the user might receive a punishment.)`);
+      client.channels.get(logs).send(`🚩 **${message.author.tag}** (${message.author.id}) reported a post with id \`<#${meme.id}>\` submitted by **${user.tag}** (${user.id}).`)
+      msg.edit(`Successfully reported meme: \`<#${meme.id}>\`.`);
       
       meme.reports++;
     });
