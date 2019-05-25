@@ -18,7 +18,7 @@ module.exports = {
 `**List of available commands**
 
 Type \`${client.settings.pre}<command>\` to use a command. 
-To get more info on a specific command do \`${client.settings.server} help <command>\`
+To get more info on a specific command do \`${client.settings.pre}help <command>\`
 
 **bio** - set your bio
 **daily** - earn a random number of Bytes every 24 hours.
