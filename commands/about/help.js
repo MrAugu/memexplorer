@@ -28,7 +28,6 @@ To get more info on a specific command do \`${client.settings.pre}help <command>
 **meme** - displays a meme
 **multiplier** - doubles the amount of Bytes you get
 **ping** - sends the bot's ping
-**play** - play an mp3 file
 **popular** - displays the posts with the most likes
 **profile** - displays the user's profile
 **report** - report a post for not following the guidelines
