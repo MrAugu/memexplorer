@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const mongoUrl = require("../..//tokens.json").mongodb;
-const posts = require("../..//models/post.js"); // eslint-disable-line no-unused-vars
+const posts = require("../..//models/post.js"); 
 const users = require("../..//models/profiles.js");
 const { invisible } = require("../../data/colors.json");
 const { loading, currencyEmoji } = require("../../data/emojis.json");
@@ -14,7 +14,7 @@ module.exports = {
   name: "leaderboard",
   description: "View the people with the most money.",
   cooldown: "5",
-  async execute (client, message, args) { // eslint-disable-line no-unused-vars
+  async execute (client, message, args) { 
     const msg = await message.channel.send(`${loading} Fetching leaderboard...`);
 
     users.find().sort([["bytes", "descending"]]).exec(async (err, res) => {

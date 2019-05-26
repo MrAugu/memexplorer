@@ -13,7 +13,7 @@ mongoose.connect(mongoUrl, {
 
 module.exports = {
   name: "test",
-  async execute (client, message, args) { // eslint-disable-line no-unused-vars
+  async execute (client, message, args) { 
     const msg = await message.channel.send(`${emoji.loading} Fetching profile...`);
 
     const user = message.mentions.members.first() || message.guild.members.get(args[0]) || message.member;

@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
-const ms = require("parse-ms"); // eslint-disable-line no-unused-vars
+const ms = require("parse-ms"); 
 const db = require("quick.db");
 const { invisible } = require("../../data/colors.json");
-const { loading, upvote, downvote } = require("../../data/emojis.json"); // eslint-disable-line no-unused-vars
+const { loading, upvote, downvote } = require("../../data/emojis.json"); 
 const posts = require("../../models/post.js");
 const profiles = require("../../models/profiles.js");
 const mongoose = require("mongoose");
@@ -16,7 +16,7 @@ module.exports = {
   description: "Displays a meme,",
   cooldown: "5",
   usage: "<id of post>",
-  async execute (client, message, args) { // eslint-disable-line no-unused-vars
+  async execute (client, message, args) { 
 
     const msg = await message.channel.send(`${loading} Fetching meme...`);
 
@@ -86,7 +86,7 @@ module.exports = {
             }
           });
   
-          collector.on("end", async c => { // eslint-disable-line no-unused-vars
+          collector.on("end", async c => { 
             await res.save().catch(e => console.log(e));
             if(u && u != undefined) await u.save().catch(e => console.log(e));
           });
@@ -127,7 +127,7 @@ module.exports = {
             }
           });
   
-          collector.on("end", async c => { // eslint-disable-line no-unused-vars
+          collector.on("end", async c => { 
             await res.save().catch(e => console.log(e));
             if(u && u != undefined) await u.save().catch(e => console.log(e));
           });

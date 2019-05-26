@@ -15,7 +15,7 @@ mongoose.connect(mongoUrl, {
 module.exports = {
   name: "multiplier",
   description: "Get up to two times amount of Bytes.",
-  async execute (client, message, args) { // eslint-disable-line no-unused-vars
+  async execute (client, message, args) { 
     dbl.hasVoted(message.author.id).then(voted => {
       profiles.findOne({
         authorID: message.author.id,

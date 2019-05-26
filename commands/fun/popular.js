@@ -13,7 +13,7 @@ module.exports = {
   name: "popular",
   description: "View the memes with the most upvotes.",
   cooldown: "5",
-  async execute (client, message, args) { // eslint-disable-line no-unused-vars
+  async execute (client, message, args) { 
     const msg = await message.channel.send(`${loading} Fetching popular posts...`);
 
     posts.find().sort([["upVotes", "descending"]]).exec(async (err, res) => {

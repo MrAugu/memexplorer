@@ -16,7 +16,7 @@ module.exports = {
   name: "daily",
   description: "Earn a random number of Bytes every 24 hours.",
   aliases: ["bytes"],
-  async execute (client, message, args) { // eslint-disable-line no-unused-vars
+  async execute (client, message, args) { 
     const msg = await message.channel.send(`${loading} Sending daily reward...`);
 
     const cooldown = 43200000;

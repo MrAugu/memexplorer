@@ -1,4 +1,4 @@
-const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
+const Discord = require("discord.js"); 
 const { loading } = require("../../data/emojis.json");
 const profiles = require("../../models/profiles.js");
 const replies = require("../../data/replies.json");

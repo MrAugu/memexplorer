@@ -1,13 +1,13 @@
 const Discord = require("discord.js");
 const db = require("quick.db");
 const { invisible } = require("../../data/colors.json");
-const { loading } = require("../../data/emojis.json"); // eslint-disable-line no-unused-vars
+const { loading } = require("../../data/emojis.json"); 
 
 module.exports = {
   name: "stats",
   description: "Bot's stats",
   cooldown: "5",
-  async execute (client, message, args) { // eslint-disable-line no-unused-vars
+  async execute (client, message, args) { 
     const msg = await message.channel.send(`${loading} Gathering stats...`);
     const botMessages = await db.fetch(`botMessages.${client.user.id}`);
 

@@ -2,7 +2,7 @@
 const validUrl = require("valid-url");
 const mongoUrl = require("../../tokens.json").mongodb;
 const { loading } = require("../../data/emojis.json");
-const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
+const Discord = require("discord.js"); 
 
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true
@@ -12,7 +12,7 @@ module.exports = {
   name: "play",
   description: "Play an mp3 file in a voice channel.",
   cooldown: "5",
-  async execute (client, message, args) { // eslint-disable-line no-unused-vars
+  async execute (client, message, args) { 
     if (!message.member.voiceChannel) return message.channel.send("You must join a voice channel to use this command.");
 
     const msg = await message.channel.send(`${loading} Joining vc...`);

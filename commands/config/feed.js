@@ -1,10 +1,10 @@
 setInterval
 
 const Discord = require("discord.js");
-const ms = require("parse-ms"); // eslint-disable-line no-unused-vars
+const ms = require("parse-ms"); 
 const db = require("quick.db");
 const { invisible } = require("../../data/colors.json");
-const { loading, upvote, downvote } = require("../../data/emojis.json"); // eslint-disable-line no-unused-vars
+const { loading, upvote, downvote } = require("../../data/emojis.json"); 
 const servers = require("../../models/server.js");
 const posts = require("../../models/post.js");
 const profiles = require("../../models/profiles.js");
@@ -20,7 +20,7 @@ module.exports = {
     cooldown: "5",
     args: true,
     usage: "<channel>",
-    async execute (client, message, args) { // eslint-disable-line no-unused-vars
+    async execute (client, message, args) { 
 
         if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.channel.send(`You must have the \`Manage Channels\` permission to use this command.`);
 
@@ -142,7 +142,7 @@ module.exports = {
                         }
                     });
         
-                    collector.on("end", async c => { // eslint-disable-line no-unused-vars
+                    collector.on("end", async c => { 
                         await res.save().catch(e => console.log(e));
                         if(u && u != undefined) await u.save().catch(e => console.log(e));
                     });

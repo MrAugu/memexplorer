@@ -6,7 +6,7 @@ const dbl = new DBL(dblToken, this.client);
 
 module.exports = {
   name: "role",
-  async execute (client, message, args) { // eslint-disable-line no-unused-vars
+  async execute (client, message, args) { 
     try {
       if (message.guild.id === "529415233899593732" || message.guild.id === "529418106309705738" || message.guild.id === "533778546288754689" || message.guild.id === "473426453204172811" || message.guild.id === "538358426326138905" || message.guild.id === "536619560783314954") {
         dbl.hasVoted(message.author.id).then(voted => {

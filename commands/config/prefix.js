@@ -1,4 +1,4 @@
-const Discord = require("discord.js"); // eslint-disable-line no-unused-vars
+const Discord = require("discord.js"); 
 const { typing } = require("../../data/emojis.json");
 const { invisible } = require("../../data/colors.json");
 const replies = require("../../data/replies.json");
