@@ -71,7 +71,7 @@ module.exports = {
                 if (r.emoji.name === upvote) {
                   const multiplierLength = 43200000;
                   res.upVotes += 1;
-                  const lastMultiplier = db.fetch(`lastMultiplier.${message.author.id}`, Date.now());
+                  const lastMultiplier = db.fetch(`lastMultiplier.${user.id}`, Date.now());
                   if (lastMultiplier !== null && multiplierLength - (Date.now() - lastMultiplier) > 0) {
                     if(u && u != undefined) u.bytes += 2;
                   } else {
@@ -112,7 +112,7 @@ module.exports = {
                 if (r.emoji.name === upvote) {
                   const multiplierLength = 43200000;
                   res.upVotes += 1;
-                  const lastMultiplier = db.fetch(`lastMultiplier.${message.author.id}`, Date.now());
+                  const lastMultiplier = db.fetch(`lastMultiplier.${user.id}`, Date.now());
                   if (lastMultiplier !== null && multiplierLength - (Date.now() - lastMultiplier) > 0) {
                     if(u && u != undefined) u.bytes += 2;
                   } else {
