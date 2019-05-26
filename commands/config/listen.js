@@ -16,25 +16,49 @@ module.exports = {
   usage: "<channel>",
   args: true,
   async execute (client, message, args) {
-    if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.channel.send(replies.noPerms);
+    if (!message.member.hasPermission("MANAGE_CHANNELS")) return message.channel.send(`You must have the \`Manage Channels\` permission to use this command.`);
 
     const msg = await message.channel.send(`${loading} Listening to commands from channel...`);
     
     let channel;
     if(message.mentions.channels.first() === undefined){
         if(!isNaN(args[0])) channel = args[0];
-        else message.channel.send("No channel detected.");
+        else msg.edit("No channel detected.");
     } else {
         channel = message.mentions.channels.first().id;
     }
 
-    channels.findOne({
-        channelID: channel
-    }, async (err, c) => {
+    servers.findOne({
+        serverID: message.guild.id
+    }, async (err, s) => {
         if (err) console.log(err);
-        c.ignore = false;
-        await c.save().catch(e => console.log(e));
-        msg.edit(`I will now listen to commands from ${args[0]}`)
+        if (!s) {
+            const newSever = new servers({
+              serverID: message.guild.id,
+              prefix: "e.",
+              feed: "",
+              ignore: [],                    
+            });
+            await newSever.save().catch(e => console.log(e));
+        }
+
+        if(s.ignore.includes(channel)){
+            for(var i = 0; i < s.ignore.length; i++){
+                if(s.ignore[i] === channel){
+                    s.ignore.splice(i, 1);
+                    message.channel.send("ok");
+                    break;
+                }
+            }
+        } else {
+            return msg.edit("This channel is not being ignored!")
+        }
+        await s.save().catch(e => console.log(e));
+        const embed = new Discord.RichEmbed()
+        .setAuthor(`${message.guild.name}`, message.guild.iconURL)
+        .setColor(invisible)
+        .setDescription(`**I will now listen to commands from ${args[0]}**\nTip: You can make me ignore commands again by doing \`${s.prefix}ignore\``);
+        msg.edit(embed);
     });
   },
 };

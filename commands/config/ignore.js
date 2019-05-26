@@ -42,12 +42,13 @@ module.exports = {
             await newSever.save().catch(e => console.log(e));
         }
 
+        if(s.ignore.includes(channel)) return msg.edit("I am already ignoring this channel!");
         s.ignore.push(channel);
         await s.save().catch(e => console.log(e));
         const embed = new Discord.RichEmbed()
         .setAuthor(`${message.guild.name}`, message.guild.iconURL)
         .setColor(invisible)
-        .setDescription(`**I will now ignore commands from ${args[0]}**\nTip: You can make me listen to commands again by doing ${s.prefix}listen ${args[0]}`);
+        .setDescription(`**I will now ignore commands from ${args[0]}**\nTip: You can make me listen to commands again by doing \`${s.prefix}listen\``);
         msg.edit(embed);
     });
   },
