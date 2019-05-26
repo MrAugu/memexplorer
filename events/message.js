@@ -21,6 +21,7 @@ module.exports = class {
 
     const mPrefix = new RegExp(`^<@!?${this.client.user.id}> `);
     let fPrefix;
+    let ignoreMsg;
     servers.findOne({
       serverID: message.guild.id,
     }, async (err, s) => {
@@ -34,10 +35,14 @@ module.exports = class {
         });
         await newServer.save().catch(e => console.log(e));
         fPrefix = message.content.match(mPrefix) ? message.content.match(mPrefix)[0] : this.client.settings.pre;
+        ignoreMsg = false;
       } else {
         fPrefix = message.content.match(mPrefix) ? message.content.match(mPrefix)[0] : s.prefix;
+        if(s.ignore.includes(message.channel.id)) ignoreMsg = true;
       }
 
+      if(ignoreMsg) return;
+      
       if (message.content.toLowerCase().indexOf(fPrefix) !== 0) return;
       const args = message.content.slice(fPrefix.length).trim().split(/ +/g);
 
