@@ -78,6 +78,8 @@ module.exports = {
           const user = await client.fetchUser(post.authorID);
           db.add(`approvedMemes.${message.author.id}`, 1);
           client.channels.get(logs).send(`${approved} **${message.author.tag}** (${message.author.id}) approved a post with id \`<#${post.id}>\` submitted by **${user.tag}** (${user.id}).`);
+          let memeCount = await postModel.countDocuments();
+          client.user.setActivity(`with ${memeCount} memes`);
           try {
             await user.send(`${approved} **${message.author.tag}** has approved your post with id \`#${post.id}\`. You can view your post by doing \`e.meme ${post.id}\`.`);
           } catch (e) {
