@@ -30,6 +30,7 @@ module.exports = class {
           serverID: message.guild.id,
           prefix: "e.",
           feed: "none",
+          ignore: [],
         });
         await newServer.save().catch(e => console.log(e));
         fPrefix = message.content.match(mPrefix) ? message.content.match(mPrefix)[0] : this.client.settings.pre;

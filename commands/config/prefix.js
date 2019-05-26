@@ -16,6 +16,9 @@ module.exports = {
   usage: "<prefix>",
   aliases: ['setprefix'],
   async execute (client, message, args) {
+
+    if (!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send(`You must have \`Manage Guild\` permission to use this command.`);
+
     if(!args[0]) {
         servers.findOne({
             serverID: message.guild.id
@@ -33,8 +36,6 @@ module.exports = {
     }
     if(!args[0]) return;
 
-    if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(replies.noPerms);
-
     let f = args[0].replace("_", " ");
     const msg = await message.channel.send(`${typing} Setting prefix to ${f}...`);
 
@@ -45,7 +46,8 @@ module.exports = {
         if (!s) {
             const newSever = new servers({
               serverID: message.guild.id,
-              prefix: "e.",                    
+              prefix: "e.",     
+              ignore: [],               
             });
             await newSever.save().catch(e => console.log(e));
         }
