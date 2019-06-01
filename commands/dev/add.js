@@ -41,6 +41,7 @@ module.exports = {
       } else if (args[1].toLowerCase() === "mod") {
         u.mod = true;
       } else if (args[1].toLowerCase() === "voter") {
+        
         u.voted = true;
       } else if (args[1].toLowerCase() === "developer") {
         u.developer = true;

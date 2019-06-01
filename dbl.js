@@ -30,12 +30,12 @@ module.exports.startUp = async (client) => {
         if (!u) {
           const newUser = new profiles({
             authorID: voter.user,
-            bytes: 0,
+            bytes: 10,
             multiplier: true,
             bio: "No bio set",
             totalPosts: 0,
             blacklisted: false,
-            voted: false,
+            voted: true,
             supporter: false,
             supporterr: false,
             supporterrr: false,
@@ -45,6 +45,7 @@ module.exports.startUp = async (client) => {
           await newUser.save().catch(e => console.log(e));
         } else {
           u.bytes += 10;
+          u.voted = true;
           u.multiplier = true;
           db.set(`lastMultiplier.${voter.user}`, Date.now());
           await u.save().catch(e => console.log(e));
