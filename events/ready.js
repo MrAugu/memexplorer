@@ -14,6 +14,6 @@ module.exports = class {
     await this.client.user.setActivity(`with ${memeCount} memes`);
     
     const dblHandler = require("../dbl.js");
-    dblHandler.startUp(client);
+    dblHandler.startUp(this.client);
   }
 };
