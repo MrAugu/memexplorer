@@ -44,7 +44,8 @@ module.exports = {
         } else {
             if (u.voted) {
                 const member = message.member;
-                const role = message.guild.roles.find("name", "Memexplorer Lover");
+                const role = message.guild.roles.find(role => role.name === "Memexplorer Lover");
+
                 if (!role) return message.channel.send("Role not found.");
                         
                 if (member.roles.has(role.id)) return message.channel.send("You already have the role!");
