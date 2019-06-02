@@ -23,12 +23,15 @@ To get more info on a specific command do \`${client.settings.pre}help <command>
 **bio** - set your bio
 **daily** - earn a random number of Bytes every 24 hours.
 **donate** - sends a link to donate
+**ignore** - the bot will stop responding to commands from that channel
 **invite** - invite link for the bot
 **leaderboard** - displays the users with the most ${client.settings.currency}
+**listen** - the bot will respond to commands from that channel
 **meme** - displays a meme
 **multiplier** - doubles the amount of Bytes you get
 **ping** - sends the bot's ping
 **popular** - displays the posts with the most likes
+**prefix** - sets the prefix of the bot
 **profile** - displays the user's profile
 **report** - report a post for not following the guidelines
 **stats** - displays the bot's stats
