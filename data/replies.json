@@ -6,7 +6,7 @@
     "noMeme": "Meme does not exist. The meme might have been removed",
     "bioLong": "Bio must be less than 200 characters",
     "reportBug": "Please join, https://discord.gg/ZJ2jm4x and report the bug",
-    "noUser": "Please provide a valid user to view profile.",
+    "noUser": "Please provide a valid user.",
     "noImg": "Please provide an attachment, or url of an image.",
     "imgError": "An error occured while uploading image to database! Please make sure you are uploading an image/gif/video, and not something else.",
     "error": "Unexpected error occured. This shouldn't happen, please join https://discord.gg/ZJ2jm4x and report the bug."
